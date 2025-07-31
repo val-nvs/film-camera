@@ -3,7 +3,7 @@
 This repository documents the build of a homemade motion picture film camera.
 Simple camera mostly 3D printed and using off the shelf parts.
 
-![image](media/v12.gif)
+![image](files/v12.gif)
 
 ## Features
 
