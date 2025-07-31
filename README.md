@@ -3,7 +3,7 @@
 This repository documents the build of a homemade motion picture film camera.
 Simple camera mostly 3D printed and using off the shelf parts.
 
-![image](media/v11.gif)
+![image](media/v12.gif)
 
 ## Features
 
@@ -27,13 +27,13 @@ Uses separate motors for each function instead of complex gears. One motor spins
 - [ ] Battery and BMS integration  
 - [ ] Test roll completed
 
-## Current Version: v11 
+## Current Version: v12 
 
-Latest iteration etc
+asdf
 
-### v10
+### v11
 
-Previous version etc
+![image](media/v11.gif)
 
 ## Key Components
 
