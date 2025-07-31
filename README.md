@@ -1,13 +1,13 @@
 # DIY Film Camera
 
-This repository documents the build of a homemade motion picture film camera.
-Simple camera mostly 3D printed and using off the shelf parts.
+This repository documents the build of a homemade motion picture film camera. Mostly 3D printed and using off the shelf parts.
 
-![image](files/v12.gif)
+![image](files/v12/v12.gif)
 
 ## Features
 
-- 35mm film <sub>120 film mod possible for more area</sub>
+- 35mm film 
+<sub>120 film mod possible for more area</sub>
 - Sony E mount for interchangeable lenses
 - Manual variable framerate <sub>for extended filming time</sub>
 - Individual motors for each function <sub>simplified, no gears</sub>
@@ -23,13 +23,13 @@ Uses separate motors for each function instead of complex gears. One motor spins
 - [x] Camera body designed in 3D  
 - [ ] Components sourcing  
 - [ ] Electrical diagram created  
-- [ ] NEMA stepper motor closed-loop setup  
 - [ ] Battery and BMS integration  
-- [ ] Test roll completed
+- [ ] Test roll
 
 ## Current Version: v12 
 
-asdf
+- Replaced cheaper Nema 17 motors for smaller and less powerful motors
+- 2 CR123A rechargable batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
 
 ### v11
 
@@ -50,9 +50,10 @@ asdf
 
 ## Notes
 
-This is an ongoing project. The design prioritizes simplicity, affordability and compactness. All major components should be easily sourceable and the 3D printed parts can be modified as needed.
+This is an ongoing project. The design prioritizes simplicity and compactness. The 3D printed parts can be modified as needed.
 
 ## Inspiration
 
 - Joshua Bird: https://joshuabird.com/blog/post/3d-printed-film-video-camera
 - Blaž Semprimožnik: https://www.youtube.com/@BlazSemprimoznik
+- Michael Reeves
