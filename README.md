@@ -29,7 +29,7 @@ Uses separate motors for each function instead of complex gears. One motor spins
 ## Current Version: v12 
 
 - Replaced cheaper Nema 17 motors for smaller and less powerful motors
-- 2 CR123A rechargable batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
+- 2 CR123A rechargeable batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
 
 ### v11
 
