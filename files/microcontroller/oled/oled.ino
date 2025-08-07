@@ -21,8 +21,9 @@ int shutterIndex = 2; // Start at 50Hz
 
 void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  pinMode(2, INPUT_PULLUP);  // Button 1: SELECT/ENTER
-  pinMode(3, INPUT_PULLUP);  // Button 2: NAVIGATE/CHANGE
+  pinMode(7, INPUT_PULLUP);  // LEFT/DECREASE button
+  pinMode(8, INPUT_PULLUP);  // ENTER/EXIT button (center)
+  pinMode(9, INPUT_PULLUP);  // RIGHT/INCREASE button
   
   fps = fpsValues[fpsIndex];
   shutterSpeed = shutterValues[shutterIndex];
@@ -82,26 +83,33 @@ void showCameraSettings() {
   display.display();
 }
 
-bool isLongPress(int pin) {
-  if(digitalRead(pin) == LOW) {
-    delay(50);
-    if(digitalRead(pin) == LOW) {
-      unsigned long pressStart = millis();
-      while(digitalRead(pin) == LOW) {
-        if(millis() - pressStart > 500) {
-          while(digitalRead(pin) == LOW) {}
-          return true;
-        }
-      }
-      return false;
-    }
-  }
-  return false;
-}
+// Removed isLongPress function - no longer needed with dedicated +/- buttons
 
 void loop() {
-  // Button 1 - SELECT/ENTER/EXIT
-  if(digitalRead(2) == LOW) {
+  // Pin 7 - LEFT/DECREASE button
+  if(digitalRead(7) == LOW) {
+    if(!editMode) {
+      // Navigate left: cycle between FPS and Shutter
+      selectedItem = 1 - selectedItem;  // Toggle between 0 and 1
+    } else {
+      // Decrease selected value
+      if(selectedItem == 0) {
+        fpsIndex--;
+        if(fpsIndex < 0) fpsIndex = 5;  // Wrap to end
+        fps = fpsValues[fpsIndex];
+      } else {
+        shutterIndex--;
+        if(shutterIndex < 0) shutterIndex = 3;  // Wrap to end
+        shutterSpeed = shutterValues[shutterIndex];
+      }
+    }
+    showCameraSettings();
+    delay(200);
+    while(digitalRead(7) == LOW) {}
+  }
+  
+  // Pin 8 - CENTER/ENTER/EXIT button
+  if(digitalRead(8) == LOW) {
     if(!editMode) {
       // Enter edit mode for selected item
       editMode = true;
@@ -111,41 +119,28 @@ void loop() {
     }
     showCameraSettings();
     delay(200);
-    while(digitalRead(2) == LOW) {}
+    while(digitalRead(8) == LOW) {}
   }
   
-  // Button 2 - NAVIGATE/CHANGE
-  if(digitalRead(3) == LOW) {
+  // Pin 9 - RIGHT/INCREASE button
+  if(digitalRead(9) == LOW) {
     if(!editMode) {
-      // Navigate between FPS and Shutter
+      // Navigate right: cycle between FPS and Shutter  
       selectedItem = 1 - selectedItem;  // Toggle between 0 and 1
     } else {
-      // Change value of selected item
-      if(isLongPress(3)) {
-        // Long press - decrease
-        if(selectedItem == 0) {
-          fpsIndex--;
-          if(fpsIndex < 0) fpsIndex = 5;  // Wrap to end
-          fps = fpsValues[fpsIndex];
-        } else {
-          shutterIndex--;
-          if(shutterIndex < 0) shutterIndex = 3;  // Wrap to end (4 elements)
-          shutterSpeed = shutterValues[shutterIndex];
-        }
+      // Increase selected value
+      if(selectedItem == 0) {
+        fpsIndex++;
+        if(fpsIndex > 5) fpsIndex = 0;  // Wrap to start
+        fps = fpsValues[fpsIndex];
       } else {
-        // Short press - increase
-        if(selectedItem == 0) {
-          fpsIndex++;
-          if(fpsIndex > 5) fpsIndex = 0;  // Wrap to start
-          fps = fpsValues[fpsIndex];
-        } else {
-          shutterIndex++;
-          if(shutterIndex > 3) shutterIndex = 0;  // Wrap to start (4 elements)
-          shutterSpeed = shutterValues[shutterIndex];
-        }
+        shutterIndex++;
+        if(shutterIndex > 3) shutterIndex = 0;  // Wrap to start
+        shutterSpeed = shutterValues[shutterIndex];
       }
     }
     showCameraSettings();
     delay(200);
+    while(digitalRead(9) == LOW) {}
   }
 }
