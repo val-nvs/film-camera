@@ -7,16 +7,11 @@ This repository documents the build of a homemade motion picture film camera. Mo
 ## Features
 
 - 35mm film 
-<sub>120 film mod possible for more area</sub>
 - Sony E mount for interchangeable lenses
-- Manual variable framerate <sub>for extended filming time</sub>
-- Individual motors for each function <sub>simplified, no gears</sub>
-- NEMA 8 stepper for shutter, NEMA 8/11/14/17 options for film advance
-- 3x CR123A batteries with USB-C charging
+- Manual variable framerate
+- NEMA 8 stepper motor
+- RCR123A batteries with USB-C charging
 
-## How it Works
-
-Uses separate motors for each function instead of complex gears. One motor spins the shutter disc, another advances the film.
 
 ## Status
 
@@ -26,13 +21,21 @@ Uses separate motors for each function instead of complex gears. One motor spins
 - [ ] Battery and BMS integration  
 - [ ] Test roll
 
-## Current Version: v12 
 
-- Replaced cheaper Nema 17 motors for smaller and less powerful motors
-- 2 CR123A rechargeable batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
+
+### v14
+- Nema 8 for film
+- Solenoid for shutter
+
+### v12 - printed
+- Nema 14 for film 
+- Nema 8 for shutter
+- 71x72x67mm
+- 2 RCR123A rechargeable batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
 
 ### v11
-
+- Nema 17 for film and shutter
+- Uses separate motors for each function instead of complex gears. One motor spins the shutter disc, another advances the film.
 ![image](media/v11.gif)
 
 ## Key Components
