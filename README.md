@@ -7,36 +7,46 @@ This repository documents the build of a homemade motion picture film camera. Mo
 ## Features
 
 - Pulls 35mm film from the end, ignoring perfs
+- Records multiple tracks in a single film strip (2 to 4)
+- Interchangeable gate (~Super16 to Super8 resolution)
+- Choose any aspect ratio without wasting film
 - Independent variable shutter
 - Sony E mount for interchangeable lenses (18mm flange)
 - Manual variable framerate (real time by logging time)
 - Stills photo mode; long exposure mode
 
 ## Parts
-- NEMA 8 stepper motor
+
+- NEMA 8 stepper motor + stepper
 - 0530 6V Solenoid
-- 2x RCR123A batteries with USB-C charging
+- 2x RCR123A batteries with USB-C + BMS
+- Body 3D print (lens mount & tripod thread)
+- Core 3D print (houses the film & film motor)
+- Shutter 3D print (lever/disc)
+- Gate (ideally a thin material)
+- OLED text display
+- 3 buttons & 1 knob
 
 ## Status
 
 - [x] Camera body designed in 3D  
 - [x] Printed
+- [ ] Electrical diagram  
 - [ ] Assembled 
-- [ ] Electrical diagram created  
-- [ ] Battery BMS  
+- [ ] Battery BMS
 - [ ] Test roll
 
-## v14
+### v14
 - Nema 8 for film
 - 0530 6V Solenoid for shutter
-- core completely encased to prevent light leaks
-- 
+- Core completely encased to prevent light leaks
+- 2x RCR123A
 
 ### v12 - printed
 - Nema 14 for film 
 - Nema 8 for shutter
 - 71x72x67mm
-- 2 RCR123A rechargeable batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
+- 2x RCR123A rechargeable batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
 
 ### v11
 - Nema 17 for film and shutter
