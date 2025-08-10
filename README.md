@@ -9,11 +9,10 @@ This repository documents the build of a homemade motion picture film camera. Mo
 - Pulls 35mm film from the end, ignoring perfs
 - Independent variable shutter
 - Sony E mount for interchangeable lenses (18mm flange)
-- Manual variable framerate (real time) by logging data
+- Manual variable framerate (real time by logging time)
 - Stills photo mode; long exposure mode
 
 ## Parts
-
 - NEMA 8 stepper motor
 - 0530 6V Solenoid
 - 2x RCR123A batteries with USB-C charging
@@ -21,12 +20,13 @@ This repository documents the build of a homemade motion picture film camera. Mo
 ## Status
 
 - [x] Camera body designed in 3D  
-- [ ] Components sourcing  
+- [x] Printed
+- [ ] Assembled 
 - [ ] Electrical diagram created  
-- [ ] Battery and BMS integration  
+- [ ] Battery BMS  
 - [ ] Test roll
 
-### v14
+## v14
 - Nema 8 for film
 - 0530 6V Solenoid for shutter
 - core completely encased to prevent light leaks
