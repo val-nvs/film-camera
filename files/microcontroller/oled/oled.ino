@@ -19,6 +19,11 @@ int fpsIndex = 2;
 int shutterValues[] = {24, 30, 50, 60};
 int shutterIndex = 2; // Start at 50Hz
 
+// Button state tracking
+bool lastButton7 = HIGH;
+bool lastButton8 = HIGH;
+bool lastButton9 = HIGH;
+
 void setup() {
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   pinMode(7, INPUT_PULLUP);  // LEFT/DECREASE button
@@ -27,8 +32,6 @@ void setup() {
   
   fps = fpsValues[fpsIndex];
   shutterSpeed = shutterValues[shutterIndex];
-  
-  showCameraSettings();
 }
 
 void showCameraSettings() {
@@ -37,31 +40,31 @@ void showCameraSettings() {
   // Button indicators in yellow area (top 16 pixels)
   // Left button (pin 7) circle
   if(digitalRead(7) == LOW) {
-    display.fillCircle(85, 8, 4, SSD1306_WHITE);  // Filled circle when pressed
+    display.fillCircle(85, 8, 4, SSD1306_WHITE);  // Filled when pressed
   } else {
-    display.drawCircle(85, 8, 4, SSD1306_WHITE);  // Hollow circle when not pressed
+    display.drawCircle(85, 8, 4, SSD1306_WHITE);  // Hollow when not pressed
   }
   
   // Center button (pin 8) circle  
   if(digitalRead(8) == LOW) {
-    display.fillCircle(100, 8, 4, SSD1306_WHITE);  // Filled circle when pressed
+    display.fillCircle(100, 8, 4, SSD1306_WHITE);
   } else {
-    display.drawCircle(100, 8, 4, SSD1306_WHITE);  // Hollow circle when not pressed
+    display.drawCircle(100, 8, 4, SSD1306_WHITE);
   }
   
   // Right button (pin 9) circle
   if(digitalRead(9) == LOW) {
-    display.fillCircle(115, 8, 4, SSD1306_WHITE);  // Filled circle when pressed
+    display.fillCircle(115, 8, 4, SSD1306_WHITE);
   } else {
-    display.drawCircle(115, 8, 4, SSD1306_WHITE);  // Hollow circle when not pressed
+    display.drawCircle(115, 8, 4, SSD1306_WHITE);
   }
   
   // FPS Display - Left box
   display.setTextSize(2);
-  if(selectedItem == 0 && !editMode) {
+  if(selectedItem == 0 && editMode) {
     display.fillRect(5, 18, 35, 25, SSD1306_WHITE);
     display.setTextColor(SSD1306_BLACK);
-  } else if(selectedItem == 0 && editMode) {
+  } else if(selectedItem == 0 && !editMode) {
     display.drawRect(5, 18, 35, 25, SSD1306_WHITE);
     display.setTextColor(SSD1306_WHITE);
   } else {
@@ -78,10 +81,10 @@ void showCameraSettings() {
   
   // Shutter Speed Display - Center box
   display.setTextSize(2);
-  if(selectedItem == 1 && !editMode) {
+  if(selectedItem == 1 && editMode) {
     display.fillRect(46, 18, 35, 25, SSD1306_WHITE);
     display.setTextColor(SSD1306_BLACK);
-  } else if(selectedItem == 1 && editMode) {
+  } else if(selectedItem == 1 && !editMode) {
     display.drawRect(46, 18, 35, 25, SSD1306_WHITE);
     display.setTextColor(SSD1306_WHITE);
   } else {
@@ -98,10 +101,10 @@ void showCameraSettings() {
   
   // Motor Display - Right box
   display.setTextSize(2);
-  if(selectedItem == 2 && !editMode) {
+  if(selectedItem == 2 && editMode) {
     display.fillRect(87, 18, 35, 25, SSD1306_WHITE);
     display.setTextColor(SSD1306_BLACK);
-  } else if(selectedItem == 2 && editMode) {
+  } else if(selectedItem == 2 && !editMode) {
     display.drawRect(87, 18, 35, 25, SSD1306_WHITE);
     display.setTextColor(SSD1306_WHITE);
   } else {
@@ -120,11 +123,16 @@ void showCameraSettings() {
 }
 
 void loop() {
-  // Update display continuously to show button states
+  // Continuous display updates for real-time button feedback
   showCameraSettings();
   
-  // Pin 7 - LEFT/DECREASE button
-  if(digitalRead(7) == LOW) {
+  // Read current button states
+  bool button7 = digitalRead(7);
+  bool button8 = digitalRead(8);
+  bool button9 = digitalRead(9);
+  
+  // Pin 7 - LEFT/DECREASE button (detect falling edge)
+  if(button7 == LOW && lastButton7 == HIGH) {
     if(!editMode) {
       // Navigate left: cycle between FPS, Shutter, Motor
       selectedItem--;
@@ -142,12 +150,10 @@ void loop() {
       }
       // Motor control not implemented yet
     }
-    delay(200);
-    while(digitalRead(7) == LOW) {}
   }
   
-  // Pin 8 - CENTER/ENTER/EXIT button
-  if(digitalRead(8) == LOW) {
+  // Pin 8 - CENTER/ENTER/EXIT button (detect falling edge)
+  if(button8 == LOW && lastButton8 == HIGH) {
     if(!editMode) {
       // Enter edit mode for selected item (only FPS and Shutter for now)
       if(selectedItem == 0 || selectedItem == 1) {
@@ -158,12 +164,10 @@ void loop() {
       // Exit edit mode
       editMode = false;
     }
-    delay(200);
-    while(digitalRead(8) == LOW) {}
   }
   
-  // Pin 9 - RIGHT/INCREASE button
-  if(digitalRead(9) == LOW) {
+  // Pin 9 - RIGHT/INCREASE button (detect falling edge)
+  if(button9 == LOW && lastButton9 == HIGH) {
     if(!editMode) {
       // Navigate right: cycle between FPS, Shutter, Motor
       selectedItem++;
@@ -181,9 +185,12 @@ void loop() {
       }
       // Motor control not implemented yet
     }
-    delay(200);
-    while(digitalRead(9) == LOW) {}
   }
   
-  delay(50);  // Small delay for smooth updates
+  // Store button states for next iteration
+  lastButton7 = button7;
+  lastButton8 = button8;
+  lastButton9 = button9;
+  
+  delay(50);  // 20 FPS refresh rate for smooth UI
 }
