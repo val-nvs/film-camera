@@ -6,6 +6,14 @@
 // Dual color: Top 16 pixels = YELLOW, Bottom 48 pixels = BLUE
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
 
+// Stepper motor pins
+#define STEP_PIN 2
+#define DIR_PIN 3
+#define EN_PIN 6
+// RST and SLP tied to 3V3
+// Wiring: Pin 2→STP, Pin 3→DIR, Pin 6→EN, 3V3→RST+SLP, GND→GND, VCC→UMOT
+// Motor: Navigate to Motor panel, press center button to rotate motor
+
 int fps = 24;           // Current FPS value
 int shutterSpeed = 50;  // Current shutter speed (Hz)
 int selectedItem = 0;   // 0 = FPS selected, 1 = Shutter selected, 2 = Motor selected
@@ -19,19 +27,63 @@ int fpsIndex = 2;
 int shutterValues[] = {24, 30, 50, 60};
 int shutterIndex = 2; // Start at 50Hz
 
+// Motor control variables
+int motorPosition = 0;  // Current step position
+
 // Button state tracking
 bool lastButton7 = HIGH;
 bool lastButton8 = HIGH;
 bool lastButton9 = HIGH;
 
 void setup() {
+  Serial.begin(9600);
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
   pinMode(7, INPUT_PULLUP);  // LEFT/DECREASE button
   pinMode(8, INPUT_PULLUP);  // ENTER/EXIT button (center)
   pinMode(9, INPUT_PULLUP);  // RIGHT/INCREASE button
   
+  // Stepper motor setup
+  pinMode(STEP_PIN, OUTPUT);
+  pinMode(DIR_PIN, OUTPUT);
+  pinMode(EN_PIN, OUTPUT);
+  
+  digitalWrite(DIR_PIN, LOW);      // Set initial direction
+  digitalWrite(EN_PIN, LOW);       // Force motor always enabled for testing
+  
   fps = fpsValues[fpsIndex];
   shutterSpeed = shutterValues[shutterIndex];
+  
+  Serial.println("Setup complete - motor should be stiff now");
+}
+
+void stepMotor(int steps, bool clockwise) {
+  digitalWrite(DIR_PIN, clockwise ? HIGH : LOW);
+  
+  for(int i = 0; i < abs(steps); i++) {
+    digitalWrite(STEP_PIN, HIGH);
+    delay(2);  // Step pulse width
+    digitalWrite(STEP_PIN, LOW);
+    delay(2);  // Step interval
+  }
+}
+
+void rotateMotor() {
+  Serial.println("Motor function called!");
+  
+  // Enable motor (already enabled for testing, but keeping logic)
+  digitalWrite(EN_PIN, LOW);
+  delay(10);  // Give motor time to energize
+  
+  Serial.println("Starting 50 steps...");
+  // Rotate motor (50 steps = about 1/4 turn for most steppers)
+  stepMotor(50, true);  // 50 steps clockwise
+  motorPosition += 50;
+  
+  Serial.println("Steps complete");
+  delay(100);  // Brief pause
+  
+  // Keep motor enabled for testing (comment out disable)
+  // digitalWrite(EN_PIN, HIGH);
 }
 
 void showCameraSettings() {
@@ -110,8 +162,8 @@ void showCameraSettings() {
   } else {
     display.setTextColor(SSD1306_WHITE);
   }
-  display.setCursor(95, 22);
-  display.print("MT");
+  display.setCursor(90, 22);
+  display.print("GO");
   
   // Motor label
   display.setTextSize(1);
@@ -131,6 +183,24 @@ void loop() {
   bool button8 = digitalRead(8);
   bool button9 = digitalRead(9);
   
+  // Debug button states every second
+  static unsigned long lastDebug = 0;
+  if(millis() - lastDebug > 1000) {
+    Serial.print("Button states: 7=");
+    Serial.print(button7 ? "HIGH" : "LOW");
+    Serial.print(" 8=");
+    Serial.print(button8 ? "HIGH" : "LOW");
+    Serial.print(" 9=");
+    Serial.print(button9 ? "HIGH" : "LOW");
+    Serial.print(" | Last: 7=");
+    Serial.print(lastButton7 ? "HIGH" : "LOW");
+    Serial.print(" 8=");
+    Serial.print(lastButton8 ? "HIGH" : "LOW");
+    Serial.print(" 9=");
+    Serial.println(lastButton9 ? "HIGH" : "LOW");
+    lastDebug = millis();
+  }
+  
   // Pin 7 - LEFT/DECREASE button (detect falling edge)
   if(button7 == LOW && lastButton7 == HIGH) {
     if(!editMode) {
@@ -138,7 +208,7 @@ void loop() {
       selectedItem--;
       if(selectedItem < 0) selectedItem = 2;  // Wrap to Motor
     } else {
-      // Decrease selected value (only for FPS and Shutter)
+      // Decrease selected value (only for FPS and Shutter in edit mode)
       if(selectedItem == 0) {
         fpsIndex--;
         if(fpsIndex < 0) fpsIndex = 5;  // Wrap to end
@@ -148,19 +218,28 @@ void loop() {
         if(shutterIndex < 0) shutterIndex = 3;  // Wrap to end
         shutterSpeed = shutterValues[shutterIndex];
       }
-      // Motor control not implemented yet
     }
   }
   
   // Pin 8 - CENTER/ENTER/EXIT button (detect falling edge)
   if(button8 == LOW && lastButton8 == HIGH) {
+    Serial.print("Center button pressed! selectedItem=");
+    Serial.print(selectedItem);
+    Serial.print(" editMode=");
+    Serial.println(editMode);
+    
     if(!editMode) {
-      // Enter edit mode for selected item (only FPS and Shutter for now)
+      // Enter edit mode for FPS and Shutter, or rotate motor
       if(selectedItem == 0 || selectedItem == 1) {
+        Serial.println("Entering edit mode");
         editMode = true;
+      } else if(selectedItem == 2) {
+        Serial.println("Motor panel - calling rotateMotor()");
+        // Motor: rotate when pressed
+        rotateMotor();
       }
-      // Motor edit mode not implemented yet
     } else {
+      Serial.println("Exiting edit mode");
       // Exit edit mode
       editMode = false;
     }
@@ -173,7 +252,7 @@ void loop() {
       selectedItem++;
       if(selectedItem > 2) selectedItem = 0;  // Wrap to FPS
     } else {
-      // Increase selected value (only for FPS and Shutter)
+      // Increase selected value (only for FPS and Shutter in edit mode)
       if(selectedItem == 0) {
         fpsIndex++;
         if(fpsIndex > 5) fpsIndex = 0;  // Wrap to start
@@ -183,7 +262,6 @@ void loop() {
         if(shutterIndex > 3) shutterIndex = 0;  // Wrap to start
         shutterSpeed = shutterValues[shutterIndex];
       }
-      // Motor control not implemented yet
     }
   }
   
