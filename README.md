@@ -32,7 +32,8 @@ This repository documents the build of a homemade motion picture film camera. Mo
 
 - [x] Camera body designed in 3D  
 - [x] Printed
-- [ ] Electrical diagram  
+- [x] Tested electornics
+- [ ] Fix BMS, stepper needs higher voltage
 - [ ] Assembled 
 - [ ] Battery BMS
 - [ ] Test roll
