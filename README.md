@@ -40,6 +40,13 @@ This repository documents the build of a homemade motion picture film camera. Mo
 
 ## Versions
 
+### v15
+- Nema 8 for film
+- Nema 14 for shutter
+- Core completely encased to prevent light leaks
+- 2x RCR123A
+- fixed flange and upside down mount
+
 ### v14
 - Nema 8 for film
 - 0530 6V Solenoid for shutter
