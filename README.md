@@ -62,53 +62,60 @@ This is an ongoing project. The design prioritizes simplicity and compactness.
 
 - Joshua Bird: https://joshuabird.com/blog/post/3d-printed-film-video-camera
 - Blaž Semprimožnik: https://www.youtube.com/@BlazSemprimoznik
-- Michael Reeves
+- Michael Reeves https://x.com/michaelreeves
 
 
 # History
 
+### v9
+![image](media/v9.gif)
+- Uses separate motors for each function instead of complex gears. One motor spins the shutter disc, another advances the film.
+- Nema 17 for film and shutter
+- 4x AAAA batteries
+
+### v10
+![image](media/v10.gif)
+
 ### v11
 ![image](media/v11.gif)
-- Nema 17 for film and shutter
-- Uses separate motors for each function instead of complex gears. One motor spins the shutter disc, another advances the film.
+- 4x RCR123A batteries
 
 
-### v12 - printed
+### v12 - PRINTED (wrong flange value)
 ![image](media/v12.gif)
 - Nema 14 for film 
 - Nema 8 for shutter
 - 71x72x67mm
-- 2x RCR123A rechargeable batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
+- 2x RCR123A batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
 
 ### v13
 ![image](media/v13.gif)
+- Tests with solenoid for shutter and shifted reel motor
 
 ### v14
 ![image](media/v14.gif)
 - Nema 8 for film
 - 0530 6V Solenoid for shutter
-- Core completely encased to prevent light leaks
 - 2x RCR123A
 
 ### v15
 ![image](media/v15.gif)
+- Fixed wrong flange value
+- Core completely encased to prevent light leaks
+- Core on bottom
 - Nema 8 for film
 - Nema 14 for shutter
-- Core completely encased to prevent light leaks
-- 2x RCR123A
-- fixed flange and upside down mount
-
-
-
+- Cold Shoe
 
 ### v16
 ![image](media/v16.gif)
+- Protuding shutter design thing
 
 ### v17
 ![image](media/v17.gif)
-- Nema 8 for film
-- Nema 14 for shutter
+- Gear to move core
 - 2x RCR123A
+- OLED
 
 
 
