@@ -2,7 +2,7 @@
 
 This repository documents the build of a homemade motion picture film camera. Mostly 3D printed and using off the shelf parts.
 
-![image](files/v12/v12.gif)
+![image](media/v17.gif)
 
 ## Features
 
@@ -40,29 +40,14 @@ This repository documents the build of a homemade motion picture film camera. Mo
 
 ## Versions
 
-### v15
-- Nema 8 for film
-- Nema 14 for shutter
-- Core completely encased to prevent light leaks
-- 2x RCR123A
-- fixed flange and upside down mount
 
-### v14
-- Nema 8 for film
-- 0530 6V Solenoid for shutter
-- Core completely encased to prevent light leaks
-- 2x RCR123A
 
-### v12 - printed
-- Nema 14 for film 
-- Nema 8 for shutter
-- 71x72x67mm
-- 2x RCR123A rechargeable batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
 
-### v11
-- Nema 17 for film and shutter
-- Uses separate motors for each function instead of complex gears. One motor spins the shutter disc, another advances the film.
-![image](media/v11.gif)
+
+
+
+
+
 
 ## Files
 
@@ -78,6 +63,56 @@ This is an ongoing project. The design prioritizes simplicity and compactness.
 - Joshua Bird: https://joshuabird.com/blog/post/3d-printed-film-video-camera
 - Blaž Semprimožnik: https://www.youtube.com/@BlazSemprimoznik
 - Michael Reeves
+
+
+# History
+
+### v11
+![image](media/v11.gif)
+- Nema 17 for film and shutter
+- Uses separate motors for each function instead of complex gears. One motor spins the shutter disc, another advances the film.
+
+
+### v12 - printed
+![image](media/v12.gif)
+- Nema 14 for film 
+- Nema 8 for shutter
+- 71x72x67mm
+- 2x RCR123A rechargeable batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
+
+### v13
+![image](media/v13.gif)
+
+### v14
+![image](media/v14.gif)
+- Nema 8 for film
+- 0530 6V Solenoid for shutter
+- Core completely encased to prevent light leaks
+- 2x RCR123A
+
+### v15
+![image](media/v15.gif)
+- Nema 8 for film
+- Nema 14 for shutter
+- Core completely encased to prevent light leaks
+- 2x RCR123A
+- fixed flange and upside down mount
+
+
+
+
+### v16
+![image](media/v16.gif)
+
+### v17
+![image](media/v17.gif)
+- Nema 8 for film
+- Nema 14 for shutter
+- 2x RCR123A
+
+
+
+
 
 # etc
 
