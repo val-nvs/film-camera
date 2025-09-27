@@ -1,8 +1,9 @@
-# DIY Film Camera
+﻿# DIY Film Camera
 
 This repository documents the build of a homemade motion picture film camera. Mostly 3D printed and using off the shelf parts.
 
 ![image](media/v17.gif)
+![image](media/gear.gif)
 
 ## Features
 
