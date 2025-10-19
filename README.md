@@ -9,7 +9,7 @@ This repository documents the build of a homemade motion picture film camera. Mo
 
 - Pulls 35mm film from the end, ignoring perfs
 - Records multiple tracks in a single film strip (2 to 4)
-- Interchangeable gate (~Super16 to Super8 resolution)
+- Interchangeable gate
 - Choose any aspect ratio without wasting film
 - Independent variable shutter
 - Sony E mount for interchangeable lenses (18mm flange)
