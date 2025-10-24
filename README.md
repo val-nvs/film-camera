@@ -1,9 +1,18 @@
-﻿# DIY Film Camera
+# DIY Film Camera
 
 This repository documents the build of a homemade motion picture film camera. Mostly 3D printed and using off the shelf parts.
 
 ![image](media/v17.gif)
 ![image](media/gear.gif)
+
+## Basically:
+
+- Acts like a motion picture camera but withouth a rack pulling mechanism, the film
+is simply pulled from one end, and the shutter uses a different motor (so no complex gears and fixed shutter angles).
+
+- ALSO you can choose the gate size, and you can slide the whole core assembly inside that holds the film to allow for multiple passes. Using a small gate and rewinding at the end and shifting the assembly (kind of like a sideways typewriter with 4 lines max).
+
+- The maximum recording FPS is still up for debate but the camera will take photos for sure.
 
 ## Features
 
