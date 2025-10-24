@@ -10,7 +10,7 @@ This repository documents the build of a homemade motion picture film camera. Mo
 - Acts like a motion picture camera but withouth a rack pulling mechanism, the film
 is simply pulled from one end, and the shutter uses a different motor (so no complex gears and fixed shutter angles).
 
-- Currently it uses photo-standard 35mm "36-exp" cartridges. So the recording time will be limited. With the smallest gate (1/4width x 1perf) you can get up to 50s of 24fps or 66s of 18fps in total (in 4 passes).
+- Currently it uses photo-standard 35mm "36-exp" cartridges. So the recording time will be limited. With the smallest gate (1/4width x 1perf) you can get up to 50s @ 24fps or 66s @ 18fps in total (in 4 passes. Max scene lenght 12.5s @ 24fps or 16.5s @ 18fps).
 
 - ALSO you can choose the gate size, and you can slide the whole internal core assembly (that holds the film) to allow for multiple passes. Use a small gate, film for a few seconds, rewind at the end, and shift. (kind of like a sideways typewriter with 4 lines max).
 
@@ -18,7 +18,9 @@ is simply pulled from one end, and the shutter uses a different motor (so no com
 
 - Currently compatible with E-mount Lenses (18mm flange).
 
-- Electronics inside will show everything you need to know and how much film you used
+- Electronics inside will show everything you need to know and how much film you used.
+
+- Unique manual variable FPS feature designed to [save on film] or [add slow motion] mid-shoot. (Each frame will be logged in time making it very easy to sync audio). (Think of it like a narrated powerpoint where some sections are photos and some are videos).
 
 ## Features
 
