@@ -81,6 +81,7 @@ This is an ongoing project. The design prioritizes simplicity and compactness.
 - Joshua Bird: https://joshuabird.com/blog/post/3d-printed-film-video-camera
 - Blaž Semprimožnik: https://www.youtube.com/@BlazSemprimoznik
 - Michael Reeves https://x.com/michaelreeves
+- henry kidman https://youtu.be/ZAtYJYfV2nA?si=rhms0dYtUCBbix3C&t=259
 
 
 # History
