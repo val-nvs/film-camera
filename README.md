@@ -136,6 +136,10 @@ This is an ongoing project. The design prioritizes simplicity and compactness.
 - 2x RCR123A
 - OLED
 
+### v18
+![image](media/v18.gif)
+- Not symmetric
+- Custom buttons
 
 
 
