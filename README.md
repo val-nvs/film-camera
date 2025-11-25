@@ -2,7 +2,7 @@
 
 This repository documents the build of a homemade motion picture film camera. Mostly 3D printed and using off the shelf parts.
 
-![image](media/v17.gif)
+![image](media/v19.gif)
 ![image](media/gear.gif)
 
 ## Basically:
@@ -86,36 +86,23 @@ This is an ongoing project. The design prioritizes simplicity and compactness.
 
 # History
 
-### v9
-![image](media/v9.gif)
-- Uses separate motors for each function instead of complex gears. One motor spins the shutter disc, another advances the film.
-- Nema 17 for film and shutter
-- 4x AAAA batteries
+### v19
+![image](media/v19.gif)
 
-### v10
-![image](media/v10.gif)
+### v18
+![image](media/v18.gif)
+- Not symmetric
+- Custom buttons
 
-### v11
-![image](media/v11.gif)
-- 4x RCR123A batteries
-
-
-### v12 - PRINTED (wrong flange value)
-![image](media/v12.gif)
-- Nema 14 for film 
-- Nema 8 for shutter
-- 71x72x67mm
-- 2x RCR123A batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
-
-### v13
-![image](media/v13.gif)
-- Tests with solenoid for shutter and shifted reel motor
-
-### v14
-![image](media/v14.gif)
-- Nema 8 for film
-- 0530 6V Solenoid for shutter
+### v17
+![image](media/v17.gif)
+- Gear to move core
 - 2x RCR123A
+- OLED
+
+### v16
+![image](media/v16.gif)
+- Protuding shutter design thing
 
 ### v15
 ![image](media/v15.gif)
@@ -126,22 +113,35 @@ This is an ongoing project. The design prioritizes simplicity and compactness.
 - Nema 14 for shutter
 - Cold Shoe
 
-### v16
-![image](media/v16.gif)
-- Protuding shutter design thing
-
-### v17
-![image](media/v17.gif)
-- Gear to move core
+### v14
+![image](media/v14.gif)
+- Nema 8 for film
+- 0530 6V Solenoid for shutter
 - 2x RCR123A
-- OLED
 
-### v18
-![image](media/v18.gif)
-- Not symmetric
-- Custom buttons
+### v13
+![image](media/v13.gif)
+- Tests with solenoid for shutter and shifted reel motor
 
+### v12 - PRINTED (wrong flange value)
+![image](media/v12.gif)
+- Nema 14 for film 
+- Nema 8 for shutter
+- 71x72x67mm
+- 2x RCR123A batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
 
+### v11
+![image](media/v11.gif)
+- 4x RCR123A batteries
+
+### v10
+![image](media/v10.gif)
+
+### v9
+![image](media/v9.gif)
+- Uses separate motors for each function instead of complex gears. One motor spins the shutter disc, another advances the film.
+- Nema 17 for film and shutter
+- 4x AAAA batteries
 
 
 # etc
