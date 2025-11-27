@@ -88,6 +88,7 @@ This is an ongoing project. The design prioritizes simplicity and compactness.
 
 ### v19
 ![image](media/v19.gif)
+v19a: added switches
 
 ### v18
 ![image](media/v18.gif)
