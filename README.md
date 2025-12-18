@@ -44,6 +44,11 @@ is simply pulled from one end, and the shutter uses a different motor (so no com
 
 ## History
 
+v20
+```
+- FDM focused redesign
+```
+
 v19
 ```
 v19a: added switches
