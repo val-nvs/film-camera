@@ -42,11 +42,19 @@ is simply pulled from one end, and the shutter uses a different motor (so no com
 - UltiMaker Cura 5.11.0 Slicer
 - Anycubic i3 Mega S Printer / 0.4mm nozzle / SMARTFIL 1.75mm Black PLA
 
+## Parts
+
+- 1x Nema 8 Stepper Motor
+- 1x Nema 14 Stepper Motor
+- 2x Stepper Driver DRV8825 [mauser.pt/096-8200](https://mauser.pt/096-8200/controlador-de-motor-stepper-drv8825-p-impressora-3d-ou-cnc)
+
 ## History
 
 v20
 ```
 - FDM focused redesign
+- better gears
+- magnets door
 ```
 
 v19
