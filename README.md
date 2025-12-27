@@ -2,12 +2,12 @@
 
 ![image](media/v19.gif)
 
-This repository documents the build of a 3D printed motion picture film camera. By [Valdir Neves](https://www.instagram.com/val.nevs/) & [Charlie Chaves](https://www.instagram.com/charliechavess/).
+This repository documents the build of a 3D printed motion picture film camera. By **[Valdir Neves](https://www.instagram.com/val.nevs/)** & **[Charlie Chaves](https://www.instagram.com/charliechavess/)**.
 
 ## Acknowledgements
 Thanks to **[Hans Boden](https://github.com/hans-boden)** for guidance and support throughout this project, including lending a 3D printer.
 
-Thanks to **[MILL - Makers In Little Lisbon](https://www.instagram.com/lxmill/)** and [Robert Allison](https://www.meetup.com/tech-art-lisboa/) for providing a platform for connecting with other makers.
+Thanks to **[MILL - Makers In Little Lisbon](https://www.instagram.com/lxmill/)** and **[Robert Allison](https://www.meetup.com/tech-art-lisboa/)** for providing a platform for connecting with other makers.
 
 
 ## Inspiration
@@ -46,7 +46,12 @@ is simply pulled from one end, and the shutter uses a different motor (so no com
 
 - 1x Nema 8 Stepper Motor
 - 1x Nema 14 Stepper Motor
-- 2x Stepper Driver DRV8825 [mauser.pt/096-8200](https://mauser.pt/096-8200/controlador-de-motor-stepper-drv8825-p-impressora-3d-ou-cnc)
+- 2x Stepper Driver DRV8825 [[mauser.pt/096-8200]](https://mauser.pt/096-8200/controlador-de-motor-stepper-drv8825-p-impressora-3d-ou-cnc)
+- Tripod threaded insert (1/4") length 6mm
+- Lens mount adaptor C-NEX (to support C-mount lenses)
+- Viewfinder: acrylic lens 24.8mm diameter
+- Viewfinder: front surface mirror 30x30x2mm
+- Viewfinder: plastic Fresnel lens f=28mm 30x30mm
 
 ## History
 
