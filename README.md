@@ -47,11 +47,11 @@ is simply pulled from one end, and the shutter uses a different motor (so no com
 - 1x Nema 8 Stepper Motor
 - 1x Nema 14 Stepper Motor
 - 2x Stepper Driver DRV8825 [[mauser.pt/096-8200]](https://mauser.pt/096-8200/controlador-de-motor-stepper-drv8825-p-impressora-3d-ou-cnc)
-- Tripod threaded insert (1/4") length 6mm
-- Lens mount adaptor C-NEX (to support C-mount lenses)
-- Viewfinder: acrylic lens 24.8mm diameter
-- Viewfinder: front surface mirror 30x30x2mm
-- Viewfinder: plastic Fresnel lens f=28mm 30x30mm
+- 1x Tripod threaded insert (1/4") length 6mm 1.96€ 10pcs
+- Lens mount adaptor C-NEX (to support C-mount lenses) 2.74€
+- Viewfinder: acrylic lens 24.8mm diameter 2.28€
+- Viewfinder: front surface mirror 30x30x2mm 1.66€
+- Viewfinder: plastic Fresnel lens f=28mm 30x30mm 2.92€
 
 ## History
 
