@@ -174,3 +174,12 @@ v9
 - Super 8  @ 16:9 crop = 18.87 mm²
 - 8mm      @ 16:9 crop = 11.39 mm²
 ```
+
+
+
+# Film scanner
+to photo scam 35mm 8 perforations film
+using 7artisans 35mm f/.95 and a small video light
+
+- v3 printed but film gets jammed
+- v4 TBA
