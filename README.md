@@ -47,7 +47,8 @@ is simply pulled from one end, and the shutter uses a different motor (so no com
 - 1x Nema 8 Stepper Motor
 - 1x Nema 14 Stepper Motor
 - 2x Stepper Driver DRV8825 [[mauser.pt/096-8200]](https://mauser.pt/096-8200/controlador-de-motor-stepper-drv8825-p-impressora-3d-ou-cnc)
-- 1x Tripod threaded insert (1/4") length 6mm 1.96€ 10pcs
+- 2x Tripod threaded insert (1/4") length 6mm 1.96€ 10pcs
+- 8x 5x3mm round magnets
 - Lens mount adaptor C-NEX (to support C-mount lenses) 2.74€
 - Viewfinder: acrylic lens 24.8mm diameter 2.28€
 - Viewfinder: front surface mirror 30x30x2mm 1.66€
@@ -174,3 +175,12 @@ v9
 - Super 8  @ 16:9 crop = 18.87 mm²
 - 8mm      @ 16:9 crop = 11.39 mm²
 ```
+
+
+
+# Film scanner
+to photo scam 35mm 8 perforations film
+using 7artisans 35mm f/.95 and a small video light
+
+- v3 printed but film gets jammed
+- v4 TBA
