@@ -7,15 +7,23 @@ This repository documents the build of a 3D printed motion picture film camera. 
 ## Acknowledgements
 Thanks to **[Hans Boden](https://github.com/hans-boden)** for guidance and support throughout this project, including lending a 3D printer.
 
-Thanks to **[MILL - Makers In Little Lisbon](https://www.instagram.com/lxmill/)** and **[Robert Allison](https://www.meetup.com/tech-art-lisboa/)** for providing a platform for connecting with other makers.
+Thanks to [MILL - Makers In Little Lisbon](https://www.instagram.com/lxmill/) and [Robert Allison](https://www.meetup.com/tech-art-lisboa/) for providing a platform for connecting with other makers.
 
+
+## Code
+[Wokwi](https://wokwi.com/projects/452815686144819201)
 
 ## Inspiration
 
-- Joshua Bird: https://joshuabird.com/blog/post/3d-printed-film-video-camera
-- Blaž Semprimožnik: https://www.youtube.com/@BlazSemprimoznik
-- henry kidman: https://youtu.be/ZAtYJYfV2nA?si=rhms0dYtUCBbix3C&t=259
-- Michael Reeves
+- Joshua Bird https://joshuabird.com/blog/post/3d-printed-film-video-camera
+	[![Github](https://img.shields.io/badge/-a?style=plastic&logo=github&color=purple)](https://github.com/jyjblrd/3D-Printed-Film-Video-Camera)
+- Blaž Semprimožnik https://blazsemprimoznik.com/okto35-mk3
+	[![YouTube](https://img.shields.io/badge/-a?style=plastic&logo=youtube&color=f00)](https://www.youtube.com/@BlazSemprimoznik)
+	[![Instagram](https://img.shields.io/badge/-a?style=plastic&logo=instagram&color=orange)](https://www.instagram.com/blazsemprimoznik/)
+- henry kidman
+	[![YouTube](https://img.shields.io/badge/3D%20printed%20MOVIE%20CAMERA%20from%20scratch-a?style=plastic&logo=youtube&color=175AAA)](https://www.youtube.com/watch?v=ZAtYJYfV2nA)
+	[![YouTube](https://img.shields.io/badge/-a?style=plastic&logo=youtube&color=f00)](https://www.youtube.com/@henry_kidman)
+	[![Instagram](https://img.shields.io/badge/-a?style=plastic&logo=instagram&color=orange)](https://www.instagram.com/henry_kidman/)
 
 ## Features (needs rewriting)
 
