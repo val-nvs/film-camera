@@ -58,6 +58,7 @@ is simply pulled from one end, and the shutter uses a different motor (so no com
 - 2x Tripod threaded insert (1/4") length 6mm 1.96€ 10pcs
 - 8x 5x3mm round magnets 3.40€ 50pc
 - Lens mount adaptor C-NEX (to support C-mount lenses) 2.74€
+- Lens: 3.6-10mm f/1.4 C-Mount [1/1.8" when dividing film into 3+ strips] "8MP IR CCTV"
 - Viewfinder: acrylic lens 24.8mm diameter 2.28€
 - Viewfinder: front surface mirror 30x30x2mm 1.66€
 - Viewfinder: plastic Fresnel lens f=28mm 30x30mm 2.92€
