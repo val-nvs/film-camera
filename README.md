@@ -1,17 +1,14 @@
-# DIY Film Camera
+# 3D Printed 35mm Film Camera
 
-![image](media/v19.gif)
+![image](media/v20.gif)![image](media/v20.gif)
 
-This repository documents the build of a 3D printed motion picture film camera. By **[Valdir Neves](https://www.instagram.com/val.nevs/)** & **[Charlie Chaves](https://www.instagram.com/charliechavess/)**.
+This repository documents the build of a 3D printed film camera that is designed to use standard 35mm 36exp film cartridges. With the goal of shooting small clips on a budget. By **[Valdir Neves](https://www.instagram.com/val.nevs/)** & **[Charlie Chaves](https://www.instagram.com/charliechavess/)**.
 
 ## Acknowledgements
+
 Thanks to **[Hans Boden](https://github.com/hans-boden)** for guidance and support throughout this project, including lending a 3D printer.
 
-Thanks to [MILL - Makers In Little Lisbon](https://www.instagram.com/lxmill/) and [Robert Allison](https://www.meetup.com/tech-art-lisboa/) for providing a platform for connecting with other makers.
-
-
-## Code
-[Wokwi](https://wokwi.com/projects/452815686144819201)
+Thanks to [MILL - Makers In Little Lisbon](https://www.instagram.com/lxmill/) for providing a platform for connecting with other makers.
 
 ## Inspiration
 
@@ -25,24 +22,24 @@ Thanks to [MILL - Makers In Little Lisbon](https://www.instagram.com/lxmill/) an
 	[![YouTube](https://img.shields.io/badge/-a?style=plastic&logo=youtube&color=f00)](https://www.youtube.com/@henry_kidman)
 	[![Instagram](https://img.shields.io/badge/-a?style=plastic&logo=instagram&color=orange)](https://www.instagram.com/henry_kidman/)
 
-## Features (needs rewriting)
 
-- Acts like a motion picture camera but withouth a rack pulling mechanism, the film
-is simply pulled from one end, and the shutter uses a different motor (so no complex gears and fixed shutter angles).
-- Currently it uses photo-standard 35mm "36-exp" cartridges. So the recording time will be limited. With the smallest gate (1/4width x 1perf) you can get up to 50s @ 24fps or 66s @ 18fps in total (in 4 passes. Max scene lenght 12.5s @ 24fps or 16.5s @ 18fps).
-- ALSO you can choose the gate size, and you can slide the whole internal core assembly (that holds the film) to allow for multiple passes. Use a small gate, film for a few seconds, rewind at the end, and shift. (kind of like a sideways typewriter with 4 lines max).
-- The maximum recording FPS is still up for debate but the camera will take still photos.
-- Currently compatible with E-mount Lenses (18mm flange).
-- Electronics inside will show everything you need to know and how much film you used.
-- Unique manual variable FPS feature designed to [save on film] or [add slow motion] mid-shoot. (Each frame will be logged in time making it very easy to sync audio). (Think of it like a narrated powerpoint where some sections are photos and some are videos).
-- Pulls 35mm film from the end, ignoring perfs
-- Records multiple tracks in a single film strip (2 to 4)
-- Interchangeable gate
-- Choose any aspect ratio without wasting film
-- Independent variable shutter
-- Sony E mount for interchangeable lenses (18mm flange)
+## Features
+
+You can choose the gate size, and you can slide the whole internal core assembly (that holds the film) to allow for multiple passes. Use a small gate, film for a few seconds, rewind at the end, and shift. (kind of like a sideways typewriter with 4 lines max).
+
+- Pulls 35mm film from the end, ignoring perfs.
+- Records multiple tracks in a single film strip (2 to 4). With the smallest gate you can film up to 50s @ 24fps* or 66s @ 18fps*, per cartridge. *(Not capable of recording videos yet.)*
+- Interchangeable gate. Choose any aspect ratio without wasting film. 
+- Independent variable shutter.
+- Sony E mount for interchangeable lenses (18mm flange). Compatible with C-mount adapters. 
 - Manual variable framerate (real time by logging time)
-- Stills photo mode; long exposure mode
+- OLED screen tracks how much film you used.
+- Unique manual variable FPS feature designed to [save on film] or [add slow motion] mid-shoot. (Each frame will be logged in time making it easy to sync audio).
+
+## Photos
+
+## Code
+[Wokwi](https://wokwi.com/projects/452815686144819201)
 
 ## Setup
 
@@ -52,25 +49,38 @@ is simply pulled from one end, and the shutter uses a different motor (so no com
 
 ## Parts
 
-- 1x Nema 8 Stepper Motor
-- 1x Nema 14 Stepper Motor
+- 1x Nema 8 Stepper Motor for the shutter
+- 1x Nema 14 Stepper Motor to pull film
 - 2x Stepper Driver DRV8825 [[mauser.pt/096-8200]](https://mauser.pt/096-8200/controlador-de-motor-stepper-drv8825-p-impressora-3d-ou-cnc)
 - 2x Tripod threaded insert (1/4") length 6mm 1.96€ 10pcs
 - 8x 5x3mm round magnets 3.40€ 50pc
+
 - Lens mount adaptor C-NEX (to support C-mount lenses) 2.74€
 - Lens: 3.6-10mm f/1.4 C-Mount [1/1.8" when dividing film into 3+ strips] "8MP IR CCTV"
+
 - Viewfinder: acrylic lens 24.8mm diameter 2.28€
 - Viewfinder: front surface mirror 30x30x2mm 1.66€
 - Viewfinder: plastic Fresnel lens f=28mm 30x30mm 2.92€
 
 ## History
 
+v20b
+```
+- shave off parts of gate and oled lid
+- added 
+- removed NPF wiring ducts
+```
+v20a
+```
+- added support for roller on core
+```
 v20
 ```
 - FDM focused redesign
 - better gears
-- magnets door
+- add 4 magnets on each wall
 ```
+![image](media/v19.gif)
 
 v19
 ```
@@ -125,6 +135,9 @@ v12 - PRINTED @JLC3DP
 - 71x72x67mm
 - 2x RCR123A batteries and holder https://www.takachi-enclosure.com/assets/attachments/images/CR123A-PC.pdf
 ```
+
+![image](media/v12.gif)
+
 
 v11
 ```
