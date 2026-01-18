@@ -32,13 +32,12 @@ Thanks to [Elly T.](https://www.instagram.com/forfutureelly/) for design advice.
 You can choose the gate size, and you can slide the whole internal core assembly (that holds the film) to allow for multiple passes. Use a small gate, film for a few seconds, rewind at the end, and shift. (kind of like a sideways typewriter with 4 lines max).
 
 - Pulls 35mm film from the end, ignoring perfs.
-- Records multiple tracks in a single film strip (2 to 4). With the smallest gate you can film up to 50s @ 24fps* or 66s @ 18fps*, per cartridge. *(Not capable of recording videos yet.)*
-- Interchangeable gate. Choose any aspect ratio without wasting film. 
+- Interchangeable gate + Records multiple tracks in a single film strip (2 to 4). With the smallest gate you can film up to 50s @ 24fps* or 66s @ 18fps*, per cartridge. *(Not capable of recording videos yet.)*
 - Independent variable shutter.
 - Sony E mount for interchangeable lenses (18mm flange). Compatible with C-mount adapters. 
 - Manual variable framerate (real time by logging time)
 - OLED screen tracks how much film you used.
-- Unique manual variable FPS feature designed to [save on film] or [add slow motion] mid-shoot. (Each frame will be logged in time making it easy to sync audio).
+- Unique manual variable FPS feature designed to [save on film] or [add slow motion] mid-shoot. (Each frame will be logged in time making it easy to sync frames and sound).
 
 ## Code
 [Wokwi](https://wokwi.com/projects/452815686144819201)
@@ -72,6 +71,7 @@ v20b
 - shave off parts of gate and oled lid
 - added 
 - removed NPF wiring ducts
+- fix shutter piece
 ```
 v20a
 ```
