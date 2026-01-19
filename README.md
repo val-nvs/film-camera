@@ -66,27 +66,30 @@ You can choose the gate size, and you can slide the whole internal core assembly
 ## History
 ![image](media/v20.gif)
 
-v20b
+v20b - Jan 19, 2026
 ```
 - shave off parts of gate and oled lid
-- added 
-- removed NPF wiring ducts
+- added lock pin
+- supressed NPF wiring ducts
 - fix shutter piece
+- fix roller size
+- rotate mount slightly
+- widen button holes
 ```
-v20a
+v20a - Jan 9, 2026
 ```
 - added support for roller on core
 ```
-v20
+v20 - Jan 1, 2026
 ```
 - FDM focused redesign
 - better gears
 - add 4 magnets on each wall
 ```
 
-v19
+v19 - Nov 25, 2025
 ```
-v19a: added switches
+v19a: added switches - Nov 26, 2025
 ```
 ![image](media/v19.gif)
 
@@ -133,7 +136,7 @@ v13
 - Tests with solenoid for shutter and shifted reel motor
 ```
 
-v12 - PRINTED @JLC3DP 
+v12 - PRINTED @JLC3DP - July 31, 2025
 
 ![image](media/v12-1.jpg)
 ![image](media/v12-2.jpg)
