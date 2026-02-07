@@ -32,14 +32,14 @@ bool motor1Locked = false; // Motor 1 (shutter) lock state
 bool motor2Locked = false; // Motor 2 (claw) lock state
 
 // FPS settings for Both menu
-const float fpsValues[] = {2.0, 1.0, 0.5}; // Frames per second
-const int numFPS = 3;
-int fpsIndex = 1; // Default to 1 FPS
+const float fpsValues[] = {5.0, 4.0, 3.0, 2.0, 1.5, 1.0, 0.5}; // Frames per second
+const int numFPS = 7;
+int fpsIndex = 5; // Default to 1 FPS
 
 // Duration (cycles) settings for Both menu
-const int cyclesValues[] = {5, 10, 20}; // Number of cycles
-const int numCycles = 3;
-int cyclesIndex = 1; // Default to 10 cycles
+const int cyclesValues[] = {1, 5, 10, 20}; // Number of cycles
+const int numCycles = 4;
+int cyclesIndex = 0; // Default to 1 cycle
 
 // Shutter speed array in microseconds: .3 .4 .5 1 2 3 4 5 8 10 16 25 32 50 60 120 180
 const long speedValues[] = {
@@ -1006,15 +1006,25 @@ void drawFPSMenu() {
   
   float currentFPS = fpsValues[fpsIndex];
   
-  if (currentFPS >= 1.0) {
-    // Display as whole number (2 or 1)
-    int wholeFPS = (int)(currentFPS + 0.1);
-    drawTextDigit(wholeFPS, x, y);
-  } else {
-    // Display as .5
+  // Check if it has a decimal part
+  int wholePart = (int)currentFPS;
+  int decimalPart = (int)((currentFPS - wholePart) * 10 + 0.1);
+  
+  if (decimalPart == 0) {
+    // Whole number: 5, 4, 3, 2, 1
+    drawTextDigit(wholePart, x, y);
+  } else if (wholePart == 0) {
+    // Less than 1: .5
     frame[y + 5][x] = 1; // Dot 1px up from bottom
     x += 2;
-    drawTextDigit(5, x, y);
+    drawTextDigit(decimalPart, x, y);
+  } else {
+    // Has both parts: 1.5
+    drawTextDigit(wholePart, x, y);
+    x += 4;
+    frame[y + 5][x] = 1; // Dot
+    x += 2;
+    drawTextDigit(decimalPart, x, y);
   }
 }
 
@@ -1033,32 +1043,80 @@ void drawDurationMenu() {
     x += 4;
     drawTextDigit(currentCycles % 10, x, y);
   } else {
-    // Single digit (5)
+    // Single digit (1, 5)
     drawTextDigit(currentCycles, x, y);
   }
 }
 
 void runBothCycle() {
-  // Run shutter for full 360° rotation, then advance claw, repeat
-  // Total cycle time (shutter + claw) must match FPS timing
+  // Run shutter and claw simultaneously using interleaved stepping
   int numCycles = cyclesValues[cyclesIndex];
   float cycleTime = 1.0 / fpsValues[fpsIndex]; // Time per cycle in seconds
-  long totalCycleTimeMicros = (long)(cycleTime * 1000000.0);
+  long cycleTimeMicros = (long)(cycleTime * 1000000.0);
   
-  // Claw advance settings
-  int clawSteps = 150;
-  long clawTimeMicros = 150000; // 150ms for 150 steps
+  // Shutter: 200 steps over full cycle time
+  int shutterSteps = 200;
+  long shutterStepMicros = cycleTimeMicros / (shutterSteps * 2); // Time per pulse phase
   
-  // Remaining time for shutter (200 steps per rotation)
-  long shutterTimeMicros = totalCycleTimeMicros - clawTimeMicros;
+  // Claw: 80 steps over 250ms (slowed down to prevent skipping)
+  int clawSteps = 80;
+  long clawTotalMicros = 250000;
+  long clawStepMicros = clawTotalMicros / (clawSteps * 2); // Time per pulse phase
+  
+  // Enable both motors
+  digitalWrite(en1, HIGH);
+  digitalWrite(en2, HIGH);
+  digitalWrite(dir1, HIGH);
+  digitalWrite(dir2, HIGH);
   
   for (int cycle = 0; cycle < numCycles; cycle++) {
-    // Run shutter for full 360° rotation (200 steps)
-    runMotor(en1, step1, dir1, 200, shutterTimeMicros);
+    unsigned long cycleStartMicros = micros();
     
-    // Run claw advance
-    runMotor(en2, step2, dir2, clawSteps, clawTimeMicros);
+    int shutterStepsDone = 0;
+    int clawStepsDone = 0;
+    bool shutterHigh = false;
+    bool clawHigh = false;
+    
+    unsigned long nextShutterTime = cycleStartMicros;
+    unsigned long nextClawTime = cycleStartMicros;
+    
+    // Run cycle - shutter runs full cycle, claw runs for 250ms
+    while (shutterStepsDone < shutterSteps) {
+      unsigned long now = micros();
+      
+      // Handle shutter stepping
+      if (now >= nextShutterTime && shutterStepsDone < shutterSteps) {
+        if (!shutterHigh) {
+          digitalWrite(step1, HIGH);
+          shutterHigh = true;
+          nextShutterTime = now + shutterStepMicros;
+        } else {
+          digitalWrite(step1, LOW);
+          shutterHigh = false;
+          shutterStepsDone++;
+          nextShutterTime = now + shutterStepMicros;
+        }
+      }
+      
+      // Handle claw stepping (only for first 250ms of cycle)
+      if (now >= nextClawTime && clawStepsDone < clawSteps) {
+        if (!clawHigh) {
+          digitalWrite(step2, HIGH);
+          clawHigh = true;
+          nextClawTime = now + clawStepMicros;
+        } else {
+          digitalWrite(step2, LOW);
+          clawHigh = false;
+          clawStepsDone++;
+          nextClawTime = now + clawStepMicros;
+        }
+      }
+    }
   }
+  
+  // Restore motors to locked state if they were locked
+  digitalWrite(en1, motor1Locked ? HIGH : LOW);
+  digitalWrite(en2, motor2Locked ? HIGH : LOW);
 }
 
 void drawTextDigit(int digit, int x, int y) {
