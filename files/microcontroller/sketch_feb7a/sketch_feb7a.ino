@@ -23,12 +23,23 @@ const int btnUp = 10;
 const int btnLeft = 11;
 
 // Menu state
-int currentMenu = 0;  // 0 = main menu, 1 = submenu shutter, 2 = submenu claw, 3 = shutter speed submenu
-int selectedLine = 0; // 0 = top line (motor1), 1 = bottom line (motor2)
+int currentMenu = 0;  // 0 = main menu, 1 = submenu shutter, 2 = submenu claw, 3 = shutter speed submenu, 4 = both submenu, 5 = fps submenu, 6 = duration submenu
+int selectedLine = 0; // 0 = top line (motor1), 1 = middle line (motor2), 2 = bottom line (both)
 int shutterSubSelection = 0; // 0 = lock, 1 = run shutter, 2 = speed settings, 3 = unused
 int clawSubSelection = 0; // 0 = lock, 1 = run claw, 2 = skip, 3 = unused
+int bothSubSelection = 0; // 0 = lock/unlock both, 1 = run, 2 = fps, 3 = duration
 bool motor1Locked = false; // Motor 1 (shutter) lock state
 bool motor2Locked = false; // Motor 2 (claw) lock state
+
+// FPS settings for Both menu
+const float fpsValues[] = {2.0, 1.0, 0.5}; // Frames per second
+const int numFPS = 3;
+int fpsIndex = 1; // Default to 1 FPS
+
+// Duration (cycles) settings for Both menu
+const int cyclesValues[] = {5, 10, 20}; // Number of cycles
+const int numCycles = 3;
+int cyclesIndex = 1; // Default to 10 cycles
 
 // Shutter speed array in microseconds: .3 .4 .5 1 2 3 4 5 8 10 16 25 32 50 60 120 180
 const long speedValues[] = {
@@ -105,13 +116,17 @@ void handleInput() {
   if (currentMenu == 0) {
     // Down button - navigate down in main menu
     if (currentDown && !lastBtnDown) {
-      selectedLine = 1;
+      if (selectedLine < 2) {
+        selectedLine++;
+      }
       delay(50);
     }
     
     // Up button - navigate up in main menu
     if (currentUp && !lastBtnUp) {
-      selectedLine = 0;
+      if (selectedLine > 0) {
+        selectedLine--;
+      }
       delay(50);
     }
     
@@ -120,9 +135,12 @@ void handleInput() {
       if (selectedLine == 0) {
         currentMenu = 1; // Enter shutter submenu
         shutterSubSelection = 0;
-      } else {
+      } else if (selectedLine == 1) {
         currentMenu = 2; // Enter claw submenu
         clawSubSelection = 0;
+      } else {
+        currentMenu = 4; // Enter both submenu
+        bothSubSelection = 0;
       }
       delay(200); // Longer delay to prevent immediate activation in submenu
     }
@@ -199,11 +217,11 @@ void handleInput() {
         motor2Locked = !motor2Locked;
         digitalWrite(en2, motor2Locked ? HIGH : LOW);
       } else if (clawSubSelection == 1) {
-        // Run claw motor (MOTOR 2!) - 50 steps
-        runMotor(en2, step2, dir2, 50, 1000);
+        // Run claw motor (MOTOR 2!) - 200 steps, 200ms total (1000μs per pulse)
+        runMotor(en2, step2, dir2, 200, 200000);
       } else if (clawSubSelection == 2) {
-        // Skip - Run claw motor 10x (500 steps)
-        runMotor(en2, step2, dir2, 500, 10000);
+        // Skip - Run claw motor 10x (2000 steps, 2000ms total)
+        runMotor(en2, step2, dir2, 2000, 2000000);
       }
       // Option 3 does nothing
       delay(200);
@@ -233,6 +251,110 @@ void handleInput() {
       delay(200);
     }
   }
+  // Both submenu
+  else if (currentMenu == 4) {
+    // Left button - go back to main menu
+    if (currentLeft && !lastBtnLeft) {
+      currentMenu = 0;
+      delay(50);
+    }
+    
+    // Down button - navigate down
+    if (currentDown && !lastBtnDown) {
+      if (bothSubSelection < 3) {
+        bothSubSelection++;
+      }
+      delay(50);
+    }
+    
+    // Up button - navigate up
+    if (currentUp && !lastBtnUp) {
+      if (bothSubSelection > 0) {
+        bothSubSelection--;
+      }
+      delay(50);
+    }
+    
+    // Right button - enter action or submenu
+    if (currentRight && !lastBtnRight) {
+      if (bothSubSelection == 0) {
+        // Lock/Unlock both motors
+        // If both are locked, unlock both
+        // If only one or none are locked, lock both
+        if (motor1Locked && motor2Locked) {
+          // Unlock both
+          motor1Locked = false;
+          motor2Locked = false;
+          digitalWrite(en1, LOW);
+          digitalWrite(en2, LOW);
+        } else {
+          // Lock both
+          motor1Locked = true;
+          motor2Locked = true;
+          digitalWrite(en1, HIGH);
+          digitalWrite(en2, HIGH);
+        }
+      } else if (bothSubSelection == 1) {
+        // Run both motors for selected cycles
+        runBothCycle();
+      } else if (bothSubSelection == 2) {
+        // Enter FPS settings submenu
+        currentMenu = 5;
+      } else if (bothSubSelection == 3) {
+        // Enter Duration settings submenu
+        currentMenu = 6;
+      }
+      delay(200);
+    }
+  }
+  // FPS settings submenu
+  else if (currentMenu == 5) {
+    // Left button - go back to both submenu
+    if (currentLeft && !lastBtnLeft) {
+      currentMenu = 4;
+      delay(200);
+    }
+    
+    // Up button - increase FPS (faster)
+    if (currentUp && !lastBtnUp) {
+      if (fpsIndex > 0) {
+        fpsIndex--;
+      }
+      delay(200);
+    }
+    
+    // Down button - decrease FPS (slower)
+    if (currentDown && !lastBtnDown) {
+      if (fpsIndex < numFPS - 1) {
+        fpsIndex++;
+      }
+      delay(200);
+    }
+  }
+  // Duration (cycles) settings submenu
+  else if (currentMenu == 6) {
+    // Left button - go back to both submenu
+    if (currentLeft && !lastBtnLeft) {
+      currentMenu = 4;
+      delay(200);
+    }
+    
+    // Up button - increase cycles
+    if (currentUp && !lastBtnUp) {
+      if (cyclesIndex < numCycles - 1) {
+        cyclesIndex++;
+      }
+      delay(200);
+    }
+    
+    // Down button - decrease cycles
+    if (currentDown && !lastBtnDown) {
+      if (cyclesIndex > 0) {
+        cyclesIndex--;
+      }
+      delay(200);
+    }
+  }
   
   lastBtnDown = currentDown;
   lastBtnRight = currentRight;
@@ -243,8 +365,8 @@ void handleInput() {
 void drawUI() {
   memset(frame, 0, sizeof(frame));
   
-  // Handle blinking
-  if (millis() - lastBlink > 500) {
+  // Handle blinking - faster rate for selected items
+  if (millis() - lastBlink > 250) {
     blinkState = !blinkState;
     lastBlink = millis();
   }
@@ -257,6 +379,22 @@ void drawUI() {
     drawClawMenu();
   } else if (currentMenu == 3) {
     drawSpeedMenu();
+  } else if (currentMenu == 4) {
+    drawBothMenu();
+  } else if (currentMenu == 5) {
+    drawFPSMenu();
+  } else if (currentMenu == 6) {
+    drawDurationMenu();
+  }
+  
+  // Always show lock indicators
+  // Shutter (motor1) lock at column 10, row 0
+  if (motor1Locked) {
+    frame[0][10] = 1;
+  }
+  // Claw (motor2) lock at column 11, row 0
+  if (motor2Locked) {
+    frame[0][11] = 1;
   }
   
   // ===== ARDUINO R4 WIFI BUILT-IN MATRIX - START =====
@@ -303,9 +441,11 @@ void drawMainMenu() {
     frame[3][0] = 1; frame[3][1] = 1;
   }
   
-  // Draw 3rd box (rows 4-5, cols 0-1) - useless for now, always solid
-  frame[4][0] = 1; frame[4][1] = 1;
-  frame[5][0] = 1; frame[5][1] = 1;
+  // Draw both selector (3rd box, rows 4-5, cols 0-1) - selectable
+  if (selectedLine != 2 || (selectedLine == 2 && blinkState)) {
+    frame[4][0] = 1; frame[4][1] = 1;
+    frame[5][0] = 1; frame[5][1] = 1;
+  }
   
   // Draw 4th box (rows 6-7, cols 0-1) - useless for now, always solid
   frame[6][0] = 1; frame[6][1] = 1;
@@ -314,8 +454,10 @@ void drawMainMenu() {
   // Draw rolling text starting at column 3
   if (selectedLine == 0) {
     drawRollingText("Shutter", 3);
-  } else {
+  } else if (selectedLine == 1) {
     drawRollingText("Claw", 3);
+  } else {
+    drawRollingText("Both", 3);
   }
 }
 
@@ -328,7 +470,10 @@ void drawRollingText(const char* text, int startCol) {
   // Reset scroll when menu or selection changes
   int currentSelection = (currentMenu == 0) ? selectedLine : 
                         (currentMenu == 1) ? shutterSubSelection : 
-                        (currentMenu == 2) ? clawSubSelection : 0;
+                        (currentMenu == 2) ? clawSubSelection : 
+                        (currentMenu == 4) ? bothSubSelection :
+                        (currentMenu == 5) ? fpsIndex :
+                        (currentMenu == 6) ? cyclesIndex : 0;
   
   if (currentMenu != lastMenu || currentSelection != lastSelection) {
     scrollOffset = 0;
@@ -375,81 +520,90 @@ int getCharWidth(char c) {
     case 'S': return 5;
     case 'h': return 5;
     case 'u': return 5;
-    case 't': return 5;
+    case 't': return 3;
     case 'e': return 5;
     case 'r': return 5;
     case 'C': return 5;
-    case 'l': return 4;
+    case 'l': return 2;
     case 'a': return 5;
     case 'w': return 5;
-    case 's': return 5;
-    case 'L': return 3;  // cols 2-4
+    case 'L': return 5;
     case 'o': return 5;
-    case 'c': return 4;
+    case 'c': return 5;
     case 'k': return 4;
     case 'U': return 5;
     case 'n': return 5;
     case 'R': return 5;
-    case 'T': return 3;  // cols 2-4
-    case 'i': return 1;  // col 1 only
+    case 'T': return 5;
+    case 'i': return 1;
     case 'm': return 5;
     case 'p': return 5;
+    case 'B': return 5;
+    case 'F': return 5;
+    case 'P': return 5;
+    case 'D': return 5;
     default: return 3; // Default for unknown chars
   }
 }
 
 void drawChar(char c, int x, int y) {
-  // Simple 5x6 font patterns (6 pixels tall)
-  byte charData[6];
+  // Simple variable-width font patterns (7 pixels tall)
+  byte charData[7];
   
   switch(c) {
     case 'S':
-      charData[0] = 0b01110;
+      charData[0] = 0b01111;
       charData[1] = 0b10000;
       charData[2] = 0b01110;
       charData[3] = 0b00001;
-      charData[4] = 0b10001;
-      charData[5] = 0b01110;
+      charData[4] = 0b00001;
+      charData[5] = 0b10001;
+      charData[6] = 0b01110;
       break;
     case 'h':
       charData[0] = 0b10000;
-      charData[1] = 0b10110;
-      charData[2] = 0b11001;
-      charData[3] = 0b10001;
+      charData[1] = 0b10000;
+      charData[2] = 0b10110;
+      charData[3] = 0b11001;
       charData[4] = 0b10001;
       charData[5] = 0b10001;
+      charData[6] = 0b10001;
       break;
     case 'u':
       charData[0] = 0b00000;
-      charData[1] = 0b10001;
+      charData[1] = 0b00000;
       charData[2] = 0b10001;
       charData[3] = 0b10001;
-      charData[4] = 0b10011;
-      charData[5] = 0b01101;
+      charData[4] = 0b10001;
+      charData[5] = 0b10001;
+      charData[6] = 0b01111;
       break;
     case 't':
-      charData[0] = 0b00100;
-      charData[1] = 0b11111;
-      charData[2] = 0b00100;
-      charData[3] = 0b00100;
-      charData[4] = 0b00100;
-      charData[5] = 0b00011;
+      charData[0] = 0b010;
+      charData[1] = 0b111;
+      charData[2] = 0b010;
+      charData[3] = 0b010;
+      charData[4] = 0b010;
+      charData[5] = 0b010;
+      charData[6] = 0b001;
       break;
     case 'e':
       charData[0] = 0b00000;
-      charData[1] = 0b01110;
-      charData[2] = 0b10001;
-      charData[3] = 0b11111;
-      charData[4] = 0b10000;
-      charData[5] = 0b01110;
+      charData[1] = 0b00000;
+      charData[2] = 0b01110;
+      charData[3] = 0b10001;
+      charData[4] = 0b11111;
+      charData[5] = 0b10000;
+      charData[6] = 0b01111;
       break;
     case 'r':
       charData[0] = 0b00000;
-      charData[1] = 0b10110;
-      charData[2] = 0b11001;
-      charData[3] = 0b10000;
+      charData[1] = 0b00000;
+      charData[2] = 0b10110;
+      charData[3] = 0b11001;
       charData[4] = 0b10000;
       charData[5] = 0b10000;
+      charData[6] = 0b10000;
       break;
     case 'C':
       charData[0] = 0b01110;
@@ -457,71 +611,71 @@ void drawChar(char c, int x, int y) {
       charData[2] = 0b10000;
       charData[3] = 0b10000;
       charData[4] = 0b10001;
-      charData[5] = 0b01110;
+      charData[5] = 0b10001;
+      charData[6] = 0b01110;
       break;
     case 'l':
-      charData[0] = 0b01100;
-      charData[1] = 0b00100;
-      charData[2] = 0b00100;
-      charData[3] = 0b00100;
-      charData[4] = 0b00100;
-      charData[5] = 0b01110;
+      charData[0] = 0b10;
+      charData[1] = 0b10;
+      charData[2] = 0b10;
+      charData[3] = 0b10;
+      charData[4] = 0b10;
+      charData[5] = 0b10;
+      charData[6] = 0b01;
       break;
     case 'a':
       charData[0] = 0b00000;
-      charData[1] = 0b01110;
-      charData[2] = 0b00001;
-      charData[3] = 0b01111;
-      charData[4] = 0b10001;
-      charData[5] = 0b01111;
+      charData[1] = 0b00000;
+      charData[2] = 0b01110;
+      charData[3] = 0b00001;
+      charData[4] = 0b01111;
+      charData[5] = 0b10001;
+      charData[6] = 0b01111;
       break;
     case 'w':
       charData[0] = 0b00000;
-      charData[1] = 0b10001;
-      charData[2] = 0b10001;
-      charData[3] = 0b10101;
-      charData[4] = 0b10101;
-      charData[5] = 0b01010;
-      break;
-    case 's':
-      charData[0] = 0b00000;
-      charData[1] = 0b01110;
-      charData[2] = 0b10000;
-      charData[3] = 0b01110;
-      charData[4] = 0b00001;
-      charData[5] = 0b11110;
-      break;
-    case 'L':
-      charData[0] = 0b100;
-      charData[1] = 0b100;
-      charData[2] = 0b100;
-      charData[3] = 0b100;
-      charData[4] = 0b100;
-      charData[5] = 0b111;
-      break;
-    case 'o':
-      charData[0] = 0b00000;
-      charData[1] = 0b01110;
+      charData[1] = 0b00000;
       charData[2] = 0b10001;
       charData[3] = 0b10001;
-      charData[4] = 0b10001;
-      charData[5] = 0b01110;
+      charData[4] = 0b10101;
+      charData[5] = 0b10101;
+      charData[6] = 0b01011;
       break;
-    case 'c':
-      charData[0] = 0b00000;
-      charData[1] = 0b01110;
+    case 'L':
+      charData[0] = 0b10000;
+      charData[1] = 0b10000;
       charData[2] = 0b10000;
       charData[3] = 0b10000;
       charData[4] = 0b10000;
-      charData[5] = 0b01110;
+      charData[5] = 0b10000;
+      charData[6] = 0b11111;
+      break;
+    case 'o':
+      charData[0] = 0b00000;
+      charData[1] = 0b00000;
+      charData[2] = 0b01110;
+      charData[3] = 0b10001;
+      charData[4] = 0b10001;
+      charData[5] = 0b10001;
+      charData[6] = 0b01110;
+      break;
+    case 'c':
+      charData[0] = 0b00000;
+      charData[1] = 0b00000;
+      charData[2] = 0b01110;
+      charData[3] = 0b10001;
+      charData[4] = 0b10000;
+      charData[5] = 0b10001;
+      charData[6] = 0b01110;
       break;
     case 'k':
-      charData[0] = 0b10000;
-      charData[1] = 0b10000;
-      charData[2] = 0b10100;
-      charData[3] = 0b11000;
-      charData[4] = 0b10100;
-      charData[5] = 0b10010;
+      charData[0] = 0b1000;
+      charData[1] = 0b1000;
+      charData[2] = 0b1001;
+      charData[3] = 0b1010;
+      charData[4] = 0b1100;
+      charData[5] = 0b1010;
+      charData[6] = 0b1001;
       break;
     case 'U':
       charData[0] = 0b10001;
@@ -529,47 +683,53 @@ void drawChar(char c, int x, int y) {
       charData[2] = 0b10001;
       charData[3] = 0b10001;
       charData[4] = 0b10001;
-      charData[5] = 0b01110;
+      charData[5] = 0b10001;
+      charData[6] = 0b01110;
       break;
     case 'n':
       charData[0] = 0b00000;
-      charData[1] = 0b10110;
-      charData[2] = 0b11001;
+      charData[1] = 0b00000;
+      charData[2] = 0b11110;
       charData[3] = 0b10001;
       charData[4] = 0b10001;
       charData[5] = 0b10001;
+      charData[6] = 0b10001;
       break;
     case 'R':
       charData[0] = 0b11110;
       charData[1] = 0b10001;
       charData[2] = 0b11110;
-      charData[3] = 0b10100;
-      charData[4] = 0b10010;
+      charData[3] = 0b10001;
+      charData[4] = 0b10001;
       charData[5] = 0b10001;
+      charData[6] = 0b10001;
       break;
     case 'T':
-      charData[0] = 0b0111;
-      charData[1] = 0b0010;
-      charData[2] = 0b0010;
-      charData[3] = 0b0010;
-      charData[4] = 0b0010;
-      charData[5] = 0b0010;
+      charData[0] = 0b11111;
+      charData[1] = 0b00100;
+      charData[2] = 0b00100;
+      charData[3] = 0b00100;
+      charData[4] = 0b00100;
+      charData[5] = 0b00100;
+      charData[6] = 0b00100;
       break;
     case 'i':
-      charData[0] = 0b01000;
-      charData[1] = 0b00000;
-      charData[2] = 0b01000;
-      charData[3] = 0b01000;
-      charData[4] = 0b01000;
-      charData[5] = 0b01000;
+      charData[0] = 0b1;
+      charData[1] = 0b0;
+      charData[2] = 0b1;
+      charData[3] = 0b1;
+      charData[4] = 0b1;
+      charData[5] = 0b1;
+      charData[6] = 0b1;
       break;
     case 'm':
       charData[0] = 0b00000;
-      charData[1] = 0b11010;
-      charData[2] = 0b10101;
+      charData[1] = 0b00000;
+      charData[2] = 0b11010;
       charData[3] = 0b10101;
       charData[4] = 0b10101;
-      charData[5] = 0b10101;
+      charData[5] = 0b10001;
+      charData[6] = 0b10001;
       break;
     case 'p':
       charData[0] = 0b00000;
@@ -578,19 +738,59 @@ void drawChar(char c, int x, int y) {
       charData[3] = 0b10001;
       charData[4] = 0b11110;
       charData[5] = 0b10000;
+      charData[6] = 0b10000;
+      break;
+    case 'B':
+      charData[0] = 0b11110;
+      charData[1] = 0b10001;
+      charData[2] = 0b11110;
+      charData[3] = 0b10001;
+      charData[4] = 0b10001;
+      charData[5] = 0b10001;
+      charData[6] = 0b11110;
+      break;
+    case 'F':
+      charData[0] = 0b11111;
+      charData[1] = 0b10000;
+      charData[2] = 0b11110;
+      charData[3] = 0b10000;
+      charData[4] = 0b10000;
+      charData[5] = 0b10000;
+      charData[6] = 0b10000;
+      break;
+    case 'P':
+      charData[0] = 0b11110;
+      charData[1] = 0b10001;
+      charData[2] = 0b10001;
+      charData[3] = 0b11110;
+      charData[4] = 0b10000;
+      charData[5] = 0b10000;
+      charData[6] = 0b10000;
+      break;
+    case 'D':
+      charData[0] = 0b11110;
+      charData[1] = 0b10001;
+      charData[2] = 0b10001;
+      charData[3] = 0b10001;
+      charData[4] = 0b10001;
+      charData[5] = 0b10001;
+      charData[6] = 0b11110;
       break;
     default:
       // Space or unknown character
-      for (int i = 0; i < 6; i++) charData[i] = 0;
+      for (int i = 0; i < 7; i++) charData[i] = 0;
       break;
   }
   
   // Draw the character starting at row 1 - only draw pixels that are >= column 3 and < column 12
-  for (int row = 0; row < 6; row++) {
-    for (int col = 0; col < 5; col++) {
+  // Get the width of this character to determine how many columns to check
+  int charWidth = getCharWidth(c);
+  
+  for (int row = 0; row < 7; row++) {
+    for (int col = 0; col < charWidth; col++) {
       int pixelX = x + col;
       if (pixelX >= 3 && pixelX < 12) {  // Clip to start at column 3
-        if (charData[row] & (1 << (4 - col))) {
+        if (charData[row] & (1 << (charWidth - 1 - col))) {
           frame[row + 1][pixelX] = 1;  // Start at row 1 (2nd row)
         }
       }
@@ -629,12 +829,6 @@ void drawShutterMenu() {
   if (shutterSubSelection != 3 || (shutterSubSelection == 3 && blinkState)) {
     frame[6][1] = 1; frame[6][2] = 1;
     frame[7][1] = 1; frame[7][2] = 1;
-  }
-  
-  // Show lock indicator (fill first box if locked)
-  if (motor1Locked) {
-    frame[0][1] = 1; frame[0][2] = 1;
-    frame[1][1] = 1; frame[1][2] = 1;
   }
   
   // Draw scrolling text for the selected option starting at column 3
@@ -688,12 +882,6 @@ void drawClawMenu() {
     frame[7][1] = 1; frame[7][2] = 1;
   }
   
-  // Show lock indicator (fill first box if locked)
-  if (motor2Locked) {
-    frame[0][1] = 1; frame[0][2] = 1;
-    frame[1][1] = 1; frame[1][2] = 1;
-  }
-  
   // Draw scrolling text for the selected option starting at column 3
   if (clawSubSelection == 0) {
     // "Lock" or "Unlock"
@@ -730,7 +918,7 @@ void drawSpeedMenu() {
     int decimalDigit = (int)((seconds * 10.0) + 0.1);
     if (decimalDigit > 9) decimalDigit = 9;
     
-    // Draw dot at position x, row y+5 (relative to starting position)
+    // Draw dot at position x, row y+5 (1px up from bottom of 7px tall font)
     frame[y + 5][x] = 1;
     x += 2;
     
@@ -759,9 +947,123 @@ void drawSpeedMenu() {
   }
 }
 
+void drawBothMenu() {
+  // No border - full 12x8 area available
+  // Light up first column (column 0)
+  for (int row = 0; row < 8; row++) {
+    frame[row][0] = 1;
+  }
+  
+  // Squares at column 1, stacked vertically
+  
+  // First option: Lock/Unlock both (top box, rows 0-1, cols 1-2)
+  if (bothSubSelection != 0 || (bothSubSelection == 0 && blinkState)) {
+    frame[0][1] = 1; frame[0][2] = 1;
+    frame[1][1] = 1; frame[1][2] = 1;
+  }
+  
+  // Second option: Run (box 2, rows 2-3, cols 1-2)
+  if (bothSubSelection != 1 || (bothSubSelection == 1 && blinkState)) {
+    frame[2][1] = 1; frame[2][2] = 1;
+    frame[3][1] = 1; frame[3][2] = 1;
+  }
+  
+  // Third option: FPS (box 3, rows 4-5, cols 1-2)
+  if (bothSubSelection != 2 || (bothSubSelection == 2 && blinkState)) {
+    frame[4][1] = 1; frame[4][2] = 1;
+    frame[5][1] = 1; frame[5][2] = 1;
+  }
+  
+  // Fourth option: Duration (box 4, rows 6-7, cols 1-2)
+  if (bothSubSelection != 3 || (bothSubSelection == 3 && blinkState)) {
+    frame[6][1] = 1; frame[6][2] = 1;
+    frame[7][1] = 1; frame[7][2] = 1;
+  }
+  
+  // Draw scrolling text for the selected option starting at column 3
+  if (bothSubSelection == 0) {
+    // "Lock" or "Unlock" based on motor states
+    if (motor1Locked && motor2Locked) {
+      drawRollingText("Unlock", 3);
+    } else {
+      drawRollingText("Lock", 3);
+    }
+  } else if (bothSubSelection == 1) {
+    drawRollingText("Run", 3);
+  } else if (bothSubSelection == 2) {
+    drawRollingText("FPS", 3);
+  } else if (bothSubSelection == 3) {
+    drawRollingText("Duration", 3);
+  }
+}
+
+void drawFPSMenu() {
+  // No border - full 12x8 area available
+  // Display FPS value starting at 1,1
+  
+  int x = 1;
+  int y = 1;
+  
+  float currentFPS = fpsValues[fpsIndex];
+  
+  if (currentFPS >= 1.0) {
+    // Display as whole number (2 or 1)
+    int wholeFPS = (int)(currentFPS + 0.1);
+    drawTextDigit(wholeFPS, x, y);
+  } else {
+    // Display as .5
+    frame[y + 5][x] = 1; // Dot 1px up from bottom
+    x += 2;
+    drawTextDigit(5, x, y);
+  }
+}
+
+void drawDurationMenu() {
+  // No border - full 12x8 area available
+  // Display duration cycles value starting at 1,1
+  
+  int x = 1;
+  int y = 1;
+  
+  int currentCycles = cyclesValues[cyclesIndex];
+  
+  if (currentCycles >= 10) {
+    // Two digits (10, 20)
+    drawTextDigit(currentCycles / 10, x, y);
+    x += 4;
+    drawTextDigit(currentCycles % 10, x, y);
+  } else {
+    // Single digit (5)
+    drawTextDigit(currentCycles, x, y);
+  }
+}
+
+void runBothCycle() {
+  // Run shutter for full 360° rotation, then advance claw, repeat
+  // Total cycle time (shutter + claw) must match FPS timing
+  int numCycles = cyclesValues[cyclesIndex];
+  float cycleTime = 1.0 / fpsValues[fpsIndex]; // Time per cycle in seconds
+  long totalCycleTimeMicros = (long)(cycleTime * 1000000.0);
+  
+  // Claw advance settings
+  int clawSteps = 150;
+  long clawTimeMicros = 150000; // 150ms for 150 steps
+  
+  // Remaining time for shutter (200 steps per rotation)
+  long shutterTimeMicros = totalCycleTimeMicros - clawTimeMicros;
+  
+  for (int cycle = 0; cycle < numCycles; cycle++) {
+    // Run shutter for full 360° rotation (200 steps)
+    runMotor(en1, step1, dir1, 200, shutterTimeMicros);
+    
+    // Run claw advance
+    runMotor(en2, step2, dir2, clawSteps, clawTimeMicros);
+  }
+}
+
 void drawTextDigit(int digit, int x, int y) {
-  // 3x6 font for digits (reduced from 8 to 6 pixels tall)
-  byte charData[6];
+  // 3x7 font for digits (7 pixels tall)
+  byte charData[7];
   
   switch(digit) {
     case 0:
@@ -771,6 +1073,7 @@ void drawTextDigit(int digit, int x, int y) {
       charData[3] = 0b101;
       charData[4] = 0b101;
       charData[5] = 0b111;
+      charData[6] = 0b000;
       break;
     case 1:
       charData[0] = 0b010;
@@ -779,6 +1082,7 @@ void drawTextDigit(int digit, int x, int y) {
       charData[3] = 0b010;
       charData[4] = 0b010;
       charData[5] = 0b111;
+      charData[6] = 0b000;
       break;
     case 2:
       charData[0] = 0b111;
@@ -787,6 +1091,7 @@ void drawTextDigit(int digit, int x, int y) {
       charData[3] = 0b100;
       charData[4] = 0b100;
       charData[5] = 0b111;
+      charData[6] = 0b000;
       break;
     case 3:
       charData[0] = 0b111;
@@ -795,6 +1100,7 @@ void drawTextDigit(int digit, int x, int y) {
       charData[3] = 0b001;
       charData[4] = 0b001;
       charData[5] = 0b111;
+      charData[6] = 0b000;
       break;
     case 4:
       charData[0] = 0b101;
@@ -803,6 +1109,7 @@ void drawTextDigit(int digit, int x, int y) {
       charData[3] = 0b001;
       charData[4] = 0b001;
       charData[5] = 0b001;
+      charData[6] = 0b000;
       break;
     case 5:
       charData[0] = 0b111;
@@ -811,6 +1118,7 @@ void drawTextDigit(int digit, int x, int y) {
       charData[3] = 0b001;
       charData[4] = 0b001;
       charData[5] = 0b111;
+      charData[6] = 0b000;
       break;
     case 6:
       charData[0] = 0b111;
@@ -819,6 +1127,7 @@ void drawTextDigit(int digit, int x, int y) {
       charData[3] = 0b101;
       charData[4] = 0b101;
       charData[5] = 0b111;
+      charData[6] = 0b000;
       break;
     case 7:
       charData[0] = 0b111;
@@ -827,6 +1136,7 @@ void drawTextDigit(int digit, int x, int y) {
       charData[3] = 0b001;
       charData[4] = 0b001;
       charData[5] = 0b001;
+      charData[6] = 0b000;
       break;
     case 8:
       charData[0] = 0b111;
@@ -835,6 +1145,7 @@ void drawTextDigit(int digit, int x, int y) {
       charData[3] = 0b101;
       charData[4] = 0b101;
       charData[5] = 0b111;
+      charData[6] = 0b000;
       break;
     case 9:
       charData[0] = 0b111;
@@ -843,48 +1154,15 @@ void drawTextDigit(int digit, int x, int y) {
       charData[3] = 0b001;
       charData[4] = 0b001;
       charData[5] = 0b111;
+      charData[6] = 0b000;
       break;
     default:
-      for (int i = 0; i < 6; i++) charData[i] = 0;
+      for (int i = 0; i < 7; i++) charData[i] = 0;
       break;
   }
   
-  // Draw the digit (6 pixels tall)
-  for (int row = 0; row < 6; row++) {
-    for (int col = 0; col < 3; col++) {
-      if (x + col < 12) {
-        if (charData[row] & (1 << (2 - col))) {
-          frame[y + row][x + col] = 1;
-        }
-      }
-    }
-  }
-}
-
-void drawTextChar(char c, int x, int y) {
-  // 3x6 font for 's' and 'm' (reduced from 8 to 6 pixels tall)
-  byte charData[6];
-  
-  if (c == 's') {
-    charData[0] = 0b111;
-    charData[1] = 0b100;
-    charData[2] = 0b111;
-    charData[3] = 0b001;
-    charData[4] = 0b001;
-    charData[5] = 0b111;
-  } else if (c == 'm') {
-    charData[0] = 0b101;
-    charData[1] = 0b111;
-    charData[2] = 0b101;
-    charData[3] = 0b101;
-    charData[4] = 0b101;
-    charData[5] = 0b101;
-  } else {
-    for (int i = 0; i < 6; i++) charData[i] = 0;
-  }
-  
-  // Draw the character (6 pixels tall)
-  for (int row = 0; row < 6; row++) {
+  // Draw the digit (7 pixels tall)
+  for (int row = 0; row < 7; row++) {
     for (int col = 0; col < 3; col++) {
       if (x + col < 12) {
         if (charData[row] & (1 << (2 - col))) {
@@ -924,5 +1202,10 @@ void runMotor(int en, int step, int dir, int steps, long totalTimeMicros) {
     }
   }
   
-  digitalWrite(en, LOW);
+  // Restore motor to locked state if it was locked
+  if (en == en1) {
+    digitalWrite(en, motor1Locked ? HIGH : LOW);
+  } else if (en == en2) {
+    digitalWrite(en, motor2Locked ? HIGH : LOW);
+  }
 }
