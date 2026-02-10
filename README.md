@@ -23,6 +23,7 @@ Thanks to [Elly T.](https://www.instagram.com/forfutureelly/) and [Daniel @photo
 	[![YouTube](https://img.shields.io/badge/-a?style=plastic&logo=youtube&color=f00)](https://www.youtube.com/@BlazSemprimoznik)
 	[![Instagram](https://img.shields.io/badge/-a?style=plastic&logo=instagram&color=orange)](https://www.instagram.com/blazsemprimoznik/)
 - Brian's Lucky Box Camera
+	[![YouTube](https://img.shields.io/badge/luckybox_camera-a?style=plastic&logo=&color=175AAA)](https://www.instagram.com/p/DKC4CXsJ28i/)
 	[![Instagram](https://img.shields.io/badge/-a?style=plastic&logo=instagram&color=orange)](https://www.instagram.com/luckybox_camera/)
 - henry kidman
 	[![YouTube](https://img.shields.io/badge/3D%20printed%20MOVIE%20CAMERA%20from%20scratch-a?style=plastic&logo=youtube&color=175AAA)](https://www.youtube.com/watch?v=ZAtYJYfV2nA)
@@ -31,7 +32,7 @@ Thanks to [Elly T.](https://www.instagram.com/forfutureelly/) and [Daniel @photo
 
 ## About:
 
-3D printed film camera, designed to use standard 35mm 36exp film. Capable of taking photos and making 1 to 4 short clips at 4 FPS
+3D printed film camera, designed to use standard 35mm 36exp film. Capable of taking photos and making 1 to 4 short clips per roll.
 
 Goals:
 
@@ -47,7 +48,7 @@ Highlights:
 
 - Multitrack video-recording: Possible to record up to 4 separate discrete tracks of video (not simultaneously) by shifting the internal assembly (and rewinding) after finishing each track. Comes with 4 options of gates to record between 1 to 4 tracks, with more options for taller aspect ratios like 1:1.
 
-- Maximum FPS for video: 4 FPS
+- Maximum FPS for video: ???
 
 - Records 1600 frames per canister with the smallest gate (divided into 4 passes) (2min@13fps). Or 820 frames using a "Super 16" sized gate (divided into 2 passes), at 24fps it would be 34s of total recording time- 45s@18fps 1min@14fps.
 
@@ -112,6 +113,11 @@ Lens:
 - Optional: 2 gears and 2 locking pins
 
 ## History
+
+Feb 10 - test failed, not enough force to pull film consistently
+
+Feb 9 - test failed, solder fail
+
 ![image](media/v20.gif)
 
 
