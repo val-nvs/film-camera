@@ -1,4 +1,4 @@
-# 3D Printed 35mm Film Camera
+# 3D Printed Clawless 35mm Film Camera
 
 ![image](media/v20-1.jpg)![image](media/v20-2.jpg)
 
@@ -12,35 +12,62 @@ Thanks to **[Hans Boden](https://github.com/hans-boden)** for guidance and suppo
 
 Thanks to [MILL - Makers In Little Lisbon](https://www.instagram.com/lxmill/) for providing a platform for connecting with other makers.
 
-Thanks to [Elly T.](https://www.instagram.com/forfutureelly/) for design advice.
+Thanks to [Elly T.](https://www.instagram.com/forfutureelly/) and [Daniel @photonbit](https://www.instagram.com/photonbit/) for design advice.
 
 ## Inspiration
 
 - Joshua Bird https://joshuabird.com/blog/post/3d-printed-film-video-camera
+	[![YouTube](https://img.shields.io/badge/-a?style=plastic&logo=youtube&color=f00)](https://www.youtube.com/@joshuayjbird)
 	[![Github](https://img.shields.io/badge/-a?style=plastic&logo=github&color=purple)](https://github.com/jyjblrd/3D-Printed-Film-Video-Camera)
 - Blaž Semprimožnik https://blazsemprimoznik.com/okto35-mk3
 	[![YouTube](https://img.shields.io/badge/-a?style=plastic&logo=youtube&color=f00)](https://www.youtube.com/@BlazSemprimoznik)
 	[![Instagram](https://img.shields.io/badge/-a?style=plastic&logo=instagram&color=orange)](https://www.instagram.com/blazsemprimoznik/)
+- Brian's Lucky Box Camera
+	[![Instagram](https://img.shields.io/badge/-a?style=plastic&logo=instagram&color=orange)](https://www.instagram.com/luckybox_camera/)
 - henry kidman
 	[![YouTube](https://img.shields.io/badge/3D%20printed%20MOVIE%20CAMERA%20from%20scratch-a?style=plastic&logo=youtube&color=175AAA)](https://www.youtube.com/watch?v=ZAtYJYfV2nA)
 	[![YouTube](https://img.shields.io/badge/-a?style=plastic&logo=youtube&color=f00)](https://www.youtube.com/@henry_kidman)
 	[![Instagram](https://img.shields.io/badge/-a?style=plastic&logo=instagram&color=orange)](https://www.instagram.com/henry_kidman/)
 
+## About:
 
-## Features
+3D printed film camera, designed to use standard 35mm 36exp film. Capable of taking photos and making 1 to 4 short clips at 4 FPS
 
-You can choose the gate size, and you can slide the whole internal core assembly (that holds the film) to allow for multiple passes. Use a small gate, film for a few seconds, rewind at the end, and shift. (kind of like a sideways typewriter with 4 lines max).
+Goals:
 
-- Pulls 35mm film from the end, ignoring perfs.
-- Interchangeable gate + Records multiple tracks in a single film strip (2 to 4). With the smallest gate you can film up to 50s @ 24fps* or 66s @ 18fps*, per cartridge. *(Not capable of recording videos yet.)*
-- Independent variable shutter.
-- Sony E mount for interchangeable lenses (18mm flange). Compatible with C-mount adapters. 
-- Manual variable framerate (real time by logging time)
+- To be a low cost-of-entry into analog motion picture with easily accesible film and labs. ~11€ film + ~15€ developing. (Super 8 starts at 23€+ B&W, color at 50€+, and it's harder to find somewhere to develop).
+
+- To be low cost when bulk loading (when someone rolls their own 5ft rolls from a 100ft or 400ft spool). I'm using Lucky SHD50 B&W bulk loaded- 1.9€ per roll. Fomapan would be around 2.7€ per roll when bulk loaded.
+
+Highlights:
+
+- 2 Motors: Instead of a single motor with a system of gears to connect the shutter and pulldown mechanism, the mechanisms are independent of each other by using a motor for each.
+
+- Clawless: Instead of claws to pulldown the film by the perforations, it simply winds the film into the camera with sticky tape. Possible due to the short total lenght of the film strip (150cm instead of 30m or 120m). Pros: simpler; frame can be any height/aspect ratio. Downside: almost impossible to project videos- must be scanned digitally.
+
+- Multitrack video-recording: Possible to record up to 4 separate discrete tracks of video (not simultaneously) by shifting the internal assembly (and rewinding) after finishing each track. Comes with 4 options of gates to record between 1 to 4 tracks, with more options for taller aspect ratios like 1:1.
+
+- Maximum FPS for video: 4 FPS
+
+- Records 1600 frames per canister with the smallest gate (divided into 4 passes) (2min@13fps). Or 820 frames using a "Super 16" sized gate (divided into 2 passes), at 24fps it would be 34s of total recording time- 45s@18fps 1min@14fps.
+
+Features:
+
+- E-mount used, easy to adapt to many lenses And it's easier to print compared to C-mount- with it's fine threads.
+
+- With the smallest "Super 8" gate you can film up to 1200 frames per cartridge (divided into 4 passes).
+
+Future plans:
+
 - OLED screen tracks how much film you used.
 - Unique manual variable FPS feature designed to [save on film] or [add slow motion] mid-shoot. (Each frame will be logged in time making it easy to sync frames and sound).
 
+
+## 3D model
+[{{{ **View in 3D on onshape** }}}](https://cad.onshape.com/documents/5c2b9c47264034ac5c1a5ddc/w/cf712b211e6f3dfb560adac5/e/ec23c9e4d3ee5216bc6ef26c?renderMode=0&uiState=696ad2c3b048071179547c61)
+
 ## Code
-[Wokwi](https://wokwi.com/projects/452815686144819201)
+[Wokwi](https://wokwi.com/projects/455248968650449921)
 
 ## Setup
 
@@ -50,21 +77,49 @@ You can choose the gate size, and you can slide the whole internal core assembly
 
 ## Parts
 
-- 1x Nema 8 Stepper Motor for the shutter
-- 1x Nema 14 Stepper Motor to pull film
-- 2x Stepper Driver DRV8825 [[mauser.pt/096-8200]](https://mauser.pt/096-8200/controlador-de-motor-stepper-drv8825-p-impressora-3d-ou-cnc)
-- 2x Tripod threaded insert (1/4") length 6mm 1.96€ 10pcs
-- 8x 5x3mm round magnets 3.40€ 50pc
+Motors:
 
-- Lens mount adaptor C-NEX (to support C-mount lenses) 2.74€
-- Lens: 3.6-10mm f/1.4 C-Mount [1/1.8" when dividing film into 3+ strips] "8MP IR CCTV"
+- 1x Nema 8 Stepper Motor for the shutter ![Static Badge](https://img.shields.io/badge/15%E2%82%AC-icon?color=purple)
+- 1x Nema 14 Stepper Motor to pull film ![Static Badge](https://img.shields.io/badge/5%E2%82%AC-icon?color=purple)
 
-- Viewfinder: acrylic lens 24.8mm diameter 2.28€
-- Viewfinder: front surface mirror 30x30x2mm 1.66€
-- Viewfinder: plastic Fresnel lens f=28mm 30x30mm 2.92€
+Other parts:
+
+- 2x Stepper Driver DRV8825 ![Static Badge](https://img.shields.io/badge/3pcs-4.5%E2%82%AC-icon?color=purple)
+- Arduino and breadboard ~15€
+- 2x Tripod threaded insert (1/4") length 6mm ![Static Badge](https://img.shields.io/badge/10pcs-2%E2%82%AC-icon?color=purple)
+- Optional: 8x 5x3mm round magnets ![Static Badge](https://img.shields.io/badge/50pcs-3.4%E2%82%AC-icon?color=purple)
+- 4x Buttons: ![Static Badge](https://img.shields.io/badge/4pcs-5.7%E2%82%AC-icon?color=purple)
+
+Viewfinder:
+
+- Acrylic lens 24.8mm diameter ![Static Badge](https://img.shields.io/badge/2.28%E2%82%AC-icon?color=purple)
+- Front surface mirror 30x30x2mm ![Static Badge](https://img.shields.io/badge/1.66%E2%82%AC-icon?color=purple)
+- Plastic Fresnel lens f=28mm 30x30mm ![Static Badge](https://img.shields.io/badge/2.92%E2%82%AC-icon?color=purple)
+
+Lens:
+
+- Lens mount adaptor C-NEX (to support C-mount lenses) ![Static Badge](https://img.shields.io/badge/2.74%E2%82%AC-icon?color=purple)
+- Lens: 3.6-10mm f/1.4 C-Mount [1/1.8"] "8MP IR CCTV" (effectively f/2) ![Static Badge](https://img.shields.io/badge/19%E2%82%AC-icon?color=purple)
+- Optional: Imaging lens cover ![Static Badge](https://img.shields.io/badge/9.7%E2%82%AC-icon?color=purple)
+
+## 3D Printed parts (v21)
+
+- Body
+- Core
+- Left and right wall
+- Shutter disc
+- Rewinder pin
+- Optional: 2 gears and 2 locking pins
 
 ## History
 ![image](media/v20.gif)
+
+
+v21 - TBA
+```
+- smaller body, eletronics outside
+- integrated viewfinder into body
+```
 
 v20b - Jan 19, 2026
 ```
@@ -176,10 +231,11 @@ v9
 ![image](media/scan3.jpg)
 
 to photo scam 35mm 8 perforations film
-using 7artisans 35mm f/.95 and a small video light
+using 7artisans 35mm f/.95 and a small video light (NEEWER RGB61 iirc)
 
 - v3 printed but film gets jammed
-- v4 TBA
+- v6 works great, 2 identical pieces that connect each-other for the base, and one tube piece to hold the lens. easy to adapt other lenses with .step file
+- v7 will add phone holder to use the flashlight to see dust particles on top of the film like the laser dyson vacuum
 
 # etc
 
